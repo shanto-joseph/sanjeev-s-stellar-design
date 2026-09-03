@@ -77,6 +77,10 @@ function Portfolio() {
   const visibleWorks = filter === "All" ? works : works.filter((work) => work.category === filter);
   const featured = works[activeWork];
 
+  if (!featured) {
+    return null;
+  }
+
   const chooseWork = (work: Work) => {
     const index = works.findIndex((item) => item.number === work.number);
     setActiveWork(index < 0 ? 0 : index);
