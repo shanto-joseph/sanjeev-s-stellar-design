@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ArrowDownRight,
   ArrowUpRight,
   Box,
   CircleArrowUp,
+  Eye,
   Feather,
   Layers3,
   Mail,
@@ -38,7 +39,7 @@ const portfolioProjects: PortfolioProject[] = [
     category: "social",
     year: "2026",
     summary:
-      "High-energy social media campaigns, carousel post sequences, promotional banners, and reel covers designed to stop the scroll and drive active engagement.",
+      "High-energy social media campaigns, carousel sequences, promotional banners, and reel covers designed to stop the scroll and drive active engagement.",
     deliverables: ["Instagram Carousels", "Ad Creatives", "Reel Covers", "Story Templates"],
     visual: "social",
     accent: "yellow",
@@ -88,6 +89,66 @@ const portfolioProjects: PortfolioProject[] = [
     summary:
       "Tactile print collateral including large-format metallic posters, tri-fold brochures, foil-stamped invitations, and editorial exhibition catalog layouts.",
     deliverables: ["Exhibition Posters", "Tri-Fold Brochures", "Foil VIP Passes", "Editorial Catalogs"],
+    visual: "print",
+    accent: "ink",
+  },
+  {
+    id: "06",
+    title: "Solstice Summer Apparel",
+    service: "Social Media Post Design",
+    category: "social",
+    year: "2026",
+    summary:
+      "Seasonal fashion feed rollout featuring multi-slide aesthetic product lookbooks, sale countdown stories, and high-conversion retargeting ad graphics.",
+    deliverables: ["Lookbook Carousels", "Sale Launch Stories", "Paid Ad Banners", "Highlight Icons"],
+    visual: "social",
+    accent: "yellow",
+  },
+  {
+    id: "07",
+    title: "Vanguard Fintech Labs",
+    service: "Logo Design",
+    category: "logo",
+    year: "2026",
+    summary:
+      "A progressive, sharp visual symbol and custom wordmark conveying security, speed, and algorithmic intelligence across fintech web & mobile apps.",
+    deliverables: ["App Icon Vector", "Responsive Logo Marks", "Monochrome Variants", "Favicon Kit"],
+    visual: "logo",
+    accent: "ink",
+  },
+  {
+    id: "08",
+    title: "Apex Venture Capital",
+    service: "Branding Design",
+    category: "branding",
+    year: "2025",
+    summary:
+      "High-end corporate identity for a Silicon Valley venture firm, featuring editorial pitch deck systems, executive business cards, and letterheads.",
+    deliverables: ["Pitch Deck Design", "Corporate Guidelines", "Letterhead & Cards", "Email Signature"],
+    visual: "branding",
+    accent: "gray",
+  },
+  {
+    id: "09",
+    title: "Lumière Botanical Candles",
+    service: "Packaging Design",
+    category: "packaging",
+    year: "2025",
+    summary:
+      "Luxury fragrance packaging with gold-foil embossed rigid boxes, tactile matte glass jar labels, safety inserts, and tamper-evident seal stickers.",
+    deliverables: ["Rigid Gift Box", "Foil Jar Labels", "Unboxing Insert", "Barcode Placement"],
+    visual: "packaging",
+    accent: "yellow",
+  },
+  {
+    id: "10",
+    title: "Haven Architecture Lookbook",
+    service: "Printing Design",
+    category: "print",
+    year: "2025",
+    summary:
+      "Hardcover monograph and print lookbook showcasing architectural residences, featuring Swiss grid layouts, spot UV covers, and heavyweight art paper specs.",
+    deliverables: ["Hardcover Monograph", "Spot UV Cover", "Print Dielines", "Paper Stock Curation"],
     visual: "print",
     accent: "ink",
   },
@@ -177,11 +238,35 @@ function SanjeevPortfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeProject, setActiveProject] = useState<PortfolioProject>(portfolioProjects[0]);
   const [filter, setFilter] = useState<string>("all");
+  const [archiveModalOpen, setArchiveModalOpen] = useState(false);
+  const [modalFilter, setModalFilter] = useState<string>("all");
 
   const filteredProjects =
     filter === "all"
       ? portfolioProjects
       : portfolioProjects.filter((p) => p.category === filter);
+
+  const modalFilteredProjects =
+    modalFilter === "all"
+      ? portfolioProjects
+      : portfolioProjects.filter((p) => p.category === modalFilter);
+
+  // Lock body scroll when archive modal is open and handle Escape key
+  useEffect(() => {
+    if (archiveModalOpen) {
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setArchiveModalOpen(false);
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [archiveModalOpen]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground selection:bg-signal selection:text-foreground">
@@ -381,7 +466,7 @@ function SanjeevPortfolio() {
         {/* WORK / SELECTED PROJECTS SECTION - Screen-Fit Proportions */}
         <section id="work" className="scroll-mt-20 border-b border-border lg:min-h-[calc(100svh-4.5rem)] lg:flex lg:flex-col lg:justify-center">
           <div className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-8">
-            {/* Header with Title & Category Filters */}
+            {/* Header with Title & Category Filters + View All Modal Trigger */}
             <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div>
                 <p className="eyebrow">02 / Selected Portfolio</p>
@@ -390,32 +475,46 @@ function SanjeevPortfolio() {
                 </h2>
               </div>
               
-              {/* Category Filter Chips */}
-              <div className="flex flex-wrap gap-1.5 display-type text-[11px] uppercase sm:gap-2">
-                {[
-                  { key: "all", label: "All" },
-                  { key: "social", label: "Social Media" },
-                  { key: "logo", label: "Logo Design" },
-                  { key: "branding", label: "Branding" },
-                  { key: "packaging", label: "Packaging" },
-                  { key: "print", label: "Printing" },
-                ].map((tab) => (
-                  <button
-                    key={tab.key}
-                    onClick={() => {
-                      setFilter(tab.key);
-                      const matched = tab.key === "all" ? portfolioProjects[0] : portfolioProjects.find(p => p.category === tab.key);
-                      if (matched) setActiveProject(matched);
-                    }}
-                    className={`border px-3 py-1 transition-colors ${
-                      filter === tab.key
-                        ? "border-foreground bg-foreground text-background font-bold"
-                        : "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
+              <div className="flex flex-wrap items-center gap-2">
+                {/* Category Filter Chips */}
+                <div className="flex flex-wrap gap-1.5 display-type text-[11px] uppercase sm:gap-2">
+                  {[
+                    { key: "all", label: "All" },
+                    { key: "social", label: "Social Media" },
+                    { key: "logo", label: "Logo Design" },
+                    { key: "branding", label: "Branding" },
+                    { key: "packaging", label: "Packaging" },
+                    { key: "print", label: "Printing" },
+                  ].map((tab) => (
+                    <button
+                      key={tab.key}
+                      onClick={() => {
+                        setFilter(tab.key);
+                        const matched = tab.key === "all" ? portfolioProjects[0] : portfolioProjects.find(p => p.category === tab.key);
+                        if (matched) setActiveProject(matched);
+                      }}
+                      className={`border px-3 py-1 transition-colors ${
+                        filter === tab.key
+                          ? "border-foreground bg-foreground text-background font-bold"
+                          : "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* VIEW MORE / POPUP TRIGGER BUTTON */}
+                <button
+                  onClick={() => {
+                    setModalFilter(filter);
+                    setArchiveModalOpen(true);
+                  }}
+                  className="border border-foreground bg-signal px-3.5 py-1 display-type text-[11px] font-bold uppercase tracking-wider text-foreground shadow-2xs transition-all hover:bg-foreground hover:text-background flex items-center gap-1.5"
+                >
+                  <Eye className="size-3.5" />
+                  <span>View More ({portfolioProjects.length})</span>
+                </button>
               </div>
             </div>
 
@@ -468,51 +567,234 @@ function SanjeevPortfolio() {
                       </div>
                     </div>
 
-                    <div className="mt-5 border-t border-border pt-4">
+                    <div className="mt-5 border-t border-border pt-4 flex flex-wrap items-center gap-2.5">
                       <Button
                         asChild
-                        className="h-10 w-full rounded-none bg-foreground px-4 display-type text-xs uppercase text-background hover:bg-signal hover:text-foreground sm:w-auto"
+                        className="h-10 rounded-none bg-foreground px-4 display-type text-xs uppercase text-background hover:bg-signal hover:text-foreground"
                       >
                         <a href="#contact">
                           Inquire about this service <ArrowUpRight className="ml-1.5 size-3.5" />
                         </a>
                       </Button>
+                      <button
+                        onClick={() => {
+                          setModalFilter(activeProject.category);
+                          setArchiveModalOpen(true);
+                        }}
+                        className="h-10 border border-border bg-studio-soft/40 px-3 display-type text-[11px] uppercase font-bold text-muted-foreground hover:border-foreground hover:text-foreground transition-colors"
+                      >
+                        All {activeProject.service} →
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Project Navigation List */}
-              <div className="lg:col-span-4">
-                <p className="display-type text-[11px] uppercase font-bold tracking-wider text-muted-foreground pb-2">
-                  Select Project
-                </p>
-                <div className="border-t border-foreground">
-                  {filteredProjects.map((project) => (
-                    <button
-                      key={project.id}
-                      onClick={() => setActiveProject(project)}
-                      className={`group grid w-full grid-cols-[2rem_1fr_auto] items-center gap-3 border-b border-border px-3 py-3 text-left transition-colors hover:bg-studio-soft/80 ${
-                        activeProject.id === project.id ? "bg-studio-soft border-l-4 border-l-signal" : ""
-                      }`}
-                    >
-                      <span className="display-type text-xs font-bold text-signal">{project.id}</span>
-                      <span className="min-w-0">
-                        <span className="display-type block text-sm font-bold uppercase truncate group-hover:text-foreground">
-                          {project.title}
+              <div className="lg:col-span-4 flex flex-col justify-between">
+                <div>
+                  <p className="display-type text-[11px] uppercase font-bold tracking-wider text-muted-foreground pb-2">
+                    Select Project
+                  </p>
+                  <div className="border-t border-foreground">
+                    {filteredProjects.map((project) => (
+                      <button
+                        key={project.id}
+                        onClick={() => setActiveProject(project)}
+                        className={`group grid w-full grid-cols-[2rem_1fr_auto] items-center gap-3 border-b border-border px-3 py-3 text-left transition-colors hover:bg-studio-soft/80 ${
+                          activeProject.id === project.id ? "bg-studio-soft border-l-4 border-l-signal" : ""
+                        }`}
+                      >
+                        <span className="display-type text-xs font-bold text-signal">{project.id}</span>
+                        <span className="min-w-0">
+                          <span className="display-type block text-sm font-bold uppercase truncate group-hover:text-foreground">
+                            {project.title}
+                          </span>
+                          <span className="block text-[11px] text-muted-foreground truncate">
+                            {project.service}
+                          </span>
                         </span>
-                        <span className="block text-[11px] text-muted-foreground truncate">
-                          {project.service}
-                        </span>
-                      </span>
-                      <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </button>
-                  ))}
+                        <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      </button>
+                    ))}
+                  </div>
                 </div>
+
+                {/* Quick Link into Complete Archive */}
+                <button
+                  onClick={() => {
+                    setModalFilter("all");
+                    setArchiveModalOpen(true);
+                  }}
+                  className="mt-4 flex w-full items-center justify-between border border-dashed border-foreground/40 bg-studio-soft/50 p-3 display-type text-[11px] font-bold uppercase tracking-wider text-foreground transition-colors hover:border-foreground hover:bg-signal"
+                >
+                  <span>Open Full Archive ({portfolioProjects.length} Works)</span>
+                  <ArrowUpRight className="size-4" />
+                </button>
               </div>
             </div>
           </div>
         </section>
+
+        {/* COMPLETE DESIGN ARCHIVE POPUP MODAL */}
+        {archiveModalOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/80 p-3 sm:p-6 lg:p-8 backdrop-blur-md animate-in fade-in duration-200"
+            onClick={() => setArchiveModalOpen(false)}
+          >
+            <div
+              className="relative flex max-h-[92vh] w-full max-w-6xl flex-col border-2 border-foreground bg-background shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Top Bar */}
+              <div className="flex flex-col gap-3 border-b border-border bg-studio-soft/40 p-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="size-2 bg-signal" />
+                    <p className="eyebrow !m-0">Archive • {portfolioProjects.length} Works</p>
+                  </div>
+                  <h3 className="display-type mt-1 text-2xl font-bold uppercase leading-none sm:text-3xl">
+                    All Works & Deliverables
+                  </h3>
+                </div>
+
+                {/* Close Button */}
+                <div className="flex items-center gap-2 self-end sm:self-auto">
+                  <span className="hidden sm:inline-block display-type text-[10px] uppercase text-muted-foreground border border-border px-2 py-1">
+                    ESC to close
+                  </span>
+                  <button
+                    onClick={() => setArchiveModalOpen(false)}
+                    className="grid size-9 place-items-center border border-foreground bg-foreground text-background transition-colors hover:bg-signal hover:text-foreground"
+                    aria-label="Close archive dialog"
+                  >
+                    <X className="size-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Filter Tabs */}
+              <div className="border-b border-border bg-background px-4 py-3 sm:px-6">
+                <div className="flex flex-wrap gap-1.5 display-type text-[11px] uppercase">
+                  {[
+                    { key: "all", label: `All (${portfolioProjects.length})` },
+                    { key: "social", label: `Social Media (${portfolioProjects.filter(p => p.category === "social").length})` },
+                    { key: "logo", label: `Logo Design (${portfolioProjects.filter(p => p.category === "logo").length})` },
+                    { key: "branding", label: `Branding (${portfolioProjects.filter(p => p.category === "branding").length})` },
+                    { key: "packaging", label: `Packaging (${portfolioProjects.filter(p => p.category === "packaging").length})` },
+                    { key: "print", label: `Printing (${portfolioProjects.filter(p => p.category === "print").length})` },
+                  ].map((tab) => (
+                    <button
+                      key={tab.key}
+                      onClick={() => setModalFilter(tab.key)}
+                      className={`border px-3 py-1 transition-colors ${
+                        modalFilter === tab.key
+                          ? "border-foreground bg-foreground text-background font-bold"
+                          : "border-border bg-studio-soft/30 text-muted-foreground hover:border-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Modal Scrollable Projects Grid */}
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {modalFilteredProjects.map((project) => (
+                    <div
+                      key={project.id}
+                      className="group flex flex-col justify-between border border-border bg-background transition-all hover:border-foreground hover:shadow-lg"
+                    >
+                      {/* Mini Visual Stage Header */}
+                      <div
+                        className={`relative h-44 overflow-hidden p-4 ${
+                          project.accent === "yellow"
+                            ? "bg-signal"
+                            : project.accent === "ink"
+                              ? "bg-foreground text-background"
+                              : "bg-studio-soft text-foreground"
+                        }`}
+                      >
+                        <div className="absolute left-3 top-3 z-10 display-type text-[10px] uppercase font-bold opacity-85">
+                          {project.id} • {project.year}
+                        </div>
+                        <div className="scale-75 origin-center">
+                          <ProjectVisual visual={project.visual} />
+                        </div>
+                      </div>
+
+                      {/* Content Body */}
+                      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
+                        <div>
+                          <span className="display-type text-[10px] font-bold uppercase text-signal">
+                            {project.service}
+                          </span>
+                          <h4 className="display-type mt-1 text-lg font-bold uppercase leading-tight">
+                            {project.title}
+                          </h4>
+                          <p className="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-3">
+                            {project.summary}
+                          </p>
+
+                          <div className="mt-3 flex flex-wrap gap-1">
+                            {project.deliverables.map((del) => (
+                              <span
+                                key={del}
+                                className="border border-border bg-studio-soft/40 px-1.5 py-0.5 text-[9px] display-type uppercase text-foreground/80"
+                              >
+                                {del}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Modal Card Footer Actions */}
+                        <div className="mt-5 flex items-center justify-between border-t border-border pt-3">
+                          <button
+                            onClick={() => {
+                              setActiveProject(project);
+                              setFilter(project.category);
+                              setArchiveModalOpen(false);
+                              document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+                            }}
+                            className="display-type text-[10px] font-bold uppercase text-foreground hover:text-signal transition-colors flex items-center gap-1"
+                          >
+                            <span>Inspect on Stage</span>
+                            <ArrowUpRight className="size-3" />
+                          </button>
+
+                          <a
+                            href="#contact"
+                            onClick={() => setArchiveModalOpen(false)}
+                            className="display-type text-[10px] font-bold uppercase text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            Inquire →
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Modal Footer Summary */}
+              <div className="flex flex-col gap-2 border-t border-border bg-studio-soft/40 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <span className="display-type text-[11px] uppercase text-muted-foreground">
+                  Showing <span className="font-bold text-foreground">{modalFilteredProjects.length}</span> of {portfolioProjects.length} Works
+                </span>
+                <a
+                  href="#contact"
+                  onClick={() => setArchiveModalOpen(false)}
+                  className="display-type text-[11px] font-bold uppercase text-foreground hover:text-signal transition-colors"
+                >
+                  Need a custom commission? Start a conversation →
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ABOUT SECTION - Screen-Fit Proportions */}
         <section id="about" className="scroll-mt-20 border-b border-border lg:min-h-[calc(100svh-4.5rem)] lg:flex lg:items-center">
