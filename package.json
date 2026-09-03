@@ -8,9 +8,8 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "deploy": "npm run build && wrangler deploy",
-    "deploy:nitro": "npm run build && npx nitro deploy --prebuilt",
-    "preview:worker": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler pages deploy dist",
+    "preview:pages": "npm run build && wrangler pages dev dist",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

@@ -9,40 +9,38 @@ High-impact, editorial portfolio web application for **Sanjeev** (Creative Graph
 
 ---
 
-## 🚀 Cloudflare Workers Deployment
+## ⚡ Cloudflare Pages Setup & Deployment
 
-This application is built with **TanStack Start + Nitro SSR**, with native Cloudflare Workers preset (`cloudflare-module`).
+### 📋 Cloudflare Dashboard Settings (Git Integration)
 
-### Option 1: Direct Deployment with Wrangler (Recommended)
+When connecting your GitHub repository to **Cloudflare Pages**:
 
-1. **Login to Cloudflare** (first time only):
+| Field | Value |
+|---|---|
+| **Framework preset** | `None` / `Custom` |
+| **Build command** | `npm run build` |
+| **Build output directory** | `dist` |
+| **Root directory** | `/` *(default)* |
+
+---
+
+### 🚀 Direct CLI Deploy (from your terminal)
+
+1. **Log in to Cloudflare** (first time only):
    ```bash
    npx wrangler login
    ```
 
-2. **Deploy to Cloudflare Workers**:
+2. **Deploy to Cloudflare Pages**:
    ```bash
    npm run deploy
    ```
-   *This automatically runs `npm run build` and deploys your worker along with static assets in `.output/public`.*
+   *(or `npx wrangler pages deploy dist`)*
 
----
-
-### Option 2: Deploy using Nitro CLI
-
-```bash
-npm run deploy:nitro
-```
-
----
-
-### Option 3: Local Cloudflare Worker Preview
-
-To test and simulate the Cloudflare Worker runtime locally before publishing:
-
-```bash
-npm run preview:worker
-```
+3. **Preview locally with Pages emulation**:
+   ```bash
+   npm run preview:pages
+   ```
 
 ---
 
