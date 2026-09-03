@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "postbuild": "node -e \"const fs=require('fs');try{fs.unlinkSync('dist/_worker.js/wrangler.json')}catch(e){}\"",
+    "postbuild": "node -e \"const fs=require('fs');try{fs.rmSync('.wrangler',{recursive:true,force:true});fs.unlinkSync('dist/_worker.js/wrangler.json')}catch(e){}\"",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler pages deploy dist",
