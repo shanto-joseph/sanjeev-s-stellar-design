@@ -568,50 +568,50 @@ function SanjeevPortfolio() {
           </div>
         </section>
 
-        {/* CONTACT SECTION */}
+        {/* CONTACT SECTION - Compact & Sleek */}
         <section id="contact" className="scroll-mt-20 bg-foreground text-background">
-          <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8 lg:px-12 lg:py-24">
-            <p className="display-type text-xs uppercase text-background/60">04 / Collaborate & Hire</p>
+          <div className="mx-auto max-w-[1440px] px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
+            <p className="display-type text-[11px] uppercase tracking-wider text-background/60">04 / Collaborate & Hire</p>
             
-            <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end">
-              <div className="lg:col-span-8">
-                <h2 className="display-type text-4xl font-bold uppercase leading-none sm:text-6xl lg:text-7xl">
+            <div className="mt-4 grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-10">
+              <div className="lg:col-span-7">
+                <h2 className="display-type text-3xl font-bold uppercase leading-tight sm:text-4xl lg:text-5xl">
                   Let’s bring your next project to life.
                 </h2>
-                <p className="mt-6 max-w-[48ch] text-base leading-relaxed text-background/70 sm:text-lg">
+                <p className="mt-3 max-w-[48ch] text-xs leading-relaxed text-background/70 sm:text-sm">
                   Available for select collaborations, commercial design projects, and high-impact visual commissions. Send over your goals and timeline.
                 </p>
               </div>
 
-              <div className="lg:col-span-4">
-                <div className="border border-background/20 bg-background/5 p-6 sm:p-7">
-                  <p className="display-type text-xs uppercase tracking-wider text-signal font-semibold">
-                    Direct Inquiries
-                  </p>
-                  <div className="mt-4 space-y-2 display-type text-xs text-background">
-                    <a
-                      href="mailto:sanjeevsanju281@gmail.com"
-                      className="flex items-center gap-2 text-background/80 hover:text-signal transition-colors"
+              <div className="lg:col-span-5">
+                <div className="border border-background/20 bg-background/5 p-4 sm:p-5">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="space-y-1 display-type text-xs text-background">
+                      <a
+                        href="mailto:sanjeevsanju281@gmail.com"
+                        className="flex items-center gap-2 text-background/85 hover:text-signal transition-colors"
+                      >
+                        <Mail className="size-3.5 shrink-0" />
+                        <span className="truncate">sanjeevsanju281@gmail.com</span>
+                      </a>
+                      <a
+                        href="tel:+919514644375"
+                        className="flex items-center gap-2 text-background/85 hover:text-signal transition-colors"
+                      >
+                        <Phone className="size-3.5 shrink-0" />
+                        <span>+919514644375</span>
+                      </a>
+                    </div>
+
+                    <Button
+                      asChild
+                      className="h-10 shrink-0 rounded-none bg-signal px-5 display-type text-xs uppercase text-foreground hover:bg-background"
                     >
-                      <Mail className="size-3.5 shrink-0" />
-                      <span className="truncate">sanjeevsanju281@gmail.com</span>
-                    </a>
-                    <a
-                      href="tel:+919514644375"
-                      className="flex items-center gap-2 text-background/80 hover:text-signal transition-colors"
-                    >
-                      <Phone className="size-3.5 shrink-0" />
-                      <span>+919514644375</span>
-                    </a>
+                      <a href="mailto:sanjeevsanju281@gmail.com">
+                        Send Brief <ArrowUpRight className="ml-1 size-3.5" />
+                      </a>
+                    </Button>
                   </div>
-                  <Button
-                    asChild
-                    className="mt-6 h-11 w-full rounded-none bg-signal px-6 display-type text-xs uppercase text-foreground hover:bg-background"
-                  >
-                    <a href="mailto:sanjeevsanju281@gmail.com">
-                      Send Project Brief <ArrowUpRight className="ml-1.5 size-4" />
-                    </a>
-                  </Button>
                 </div>
               </div>
             </div>
@@ -621,9 +621,9 @@ function SanjeevPortfolio() {
 
       {/* FOOTER */}
       <footer className="bg-foreground text-background">
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-4 border-t border-background/15 px-4 py-8 display-type text-xs uppercase text-background/60 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 border-t border-background/15 px-4 py-5 display-type text-[11px] uppercase tracking-wider text-background/60 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
           <span>© 2026 Sanjeev / Graphic Designer</span>
-          <div className="flex flex-wrap gap-6">
+          <div className="flex flex-wrap gap-5">
             <a href="#top" className="transition-colors hover:text-background">
               Back to top <CircleArrowUp className="ml-1 inline size-3.5" />
             </a>
