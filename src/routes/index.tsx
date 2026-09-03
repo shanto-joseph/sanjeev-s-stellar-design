@@ -1,206 +1,785 @@
 import { useState } from "react";
-import { ArrowDownRight, ArrowUpRight, CircleArrowUp, Menu, X } from "lucide-react";
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  Box,
+  CircleArrowUp,
+  Feather,
+  Layers3,
+  Mail,
+  Menu,
+  Printer,
+  Share2,
+  Sparkles,
+  X,
+} from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
-import profileAsset from "@/assets/sanjeev-profile.png.asset.json";
-import sunglassesAsset from "@/assets/sanjeev-sunglasses.png.asset.json";
 
-type Work = {
-  number: string;
+type PortfolioProject = {
+  id: string;
   title: string;
-  category: string;
+  service: string;
+  category: "social" | "logo" | "branding" | "packaging" | "print";
   year: string;
-  description: string;
-  palette: string;
-  visual: "sun" | "orbit" | "paper" | "type";
+  summary: string;
+  deliverables: string[];
+  visual: "social" | "logo" | "branding" | "packaging" | "print";
+  accent: "yellow" | "ink" | "gray";
 };
 
-const works: Work[] = [
+const portfolioProjects: PortfolioProject[] = [
   {
-    number: "01",
-    title: "After Hours",
-    category: "Brand identity",
+    id: "01",
+    title: "Aura Motion & Fitness",
+    service: "Social Media Post Design",
+    category: "social",
+    year: "2026",
+    summary:
+      "High-energy social media campaigns, carousel post sequences, promotional banners, and reel covers designed to stop the scroll and drive active engagement.",
+    deliverables: ["Instagram Carousels", "Ad Creatives", "Reel Covers", "Story Templates"],
+    visual: "social",
+    accent: "yellow",
+  },
+  {
+    id: "02",
+    title: "Kanso Architectural Studio",
+    service: "Logo Design",
+    category: "logo",
+    year: "2026",
+    summary:
+      "A timeless geometric monogram and minimalist typographic mark built with mathematical balance, adaptable across digital screens and physical signage.",
+    deliverables: ["Primary Logotype", "Secondary Monogram", "Icon Suite", "Vector Guidelines"],
+    visual: "logo",
+    accent: "ink",
+  },
+  {
+    id: "03",
+    title: "Verve Organic Botanicals",
+    service: "Branding Design",
+    category: "branding",
     year: "2025",
-    description: "A night-time culture platform with a flexible identity built for posters, playlists and places.",
-    palette: "dark",
-    visual: "sun",
+    summary:
+      "A comprehensive visual identity system featuring curated earthy color palettes, bespoke typography pairings, brand assets, and complete brand guidelines.",
+    deliverables: ["Brand Identity System", "Color & Type Rules", "Brand Guidelines", "Stationery Kit"],
+    visual: "branding",
+    accent: "gray",
   },
   {
+    id: "04",
+    title: "Nectar Cold Brew Roasters",
+    service: "Packaging Design",
+    category: "packaging",
+    year: "2025",
+    summary:
+      "Striking retail packaging with tactile bottle labels, custom structural box dielines, pouch graphics, and an unboxing experience that stands out on retail shelves.",
+    deliverables: ["Product Box Dielines", "Bottle & Can Labels", "Coffee Pouch Graphics", "3D Mockups"],
+    visual: "packaging",
+    accent: "yellow",
+  },
+  {
+    id: "05",
+    title: "Monolith Annual Design Expo",
+    service: "Printing Design",
+    category: "print",
+    year: "2025",
+    summary:
+      "Tactile print collateral including large-format metallic posters, tri-fold brochures, foil-stamped invitations, and editorial exhibition catalog layouts.",
+    deliverables: ["Exhibition Posters", "Tri-Fold Brochures", "Foil VIP Passes", "Editorial Catalogs"],
+    visual: "print",
+    accent: "ink",
+  },
+];
+
+const portfolioCapabilities = [
+  {
+    icon: Share2,
+    number: "01",
+    label: "Social Media Post",
+    highlight: "Engaging Feed & Ad Visuals",
+    detail:
+      "Custom carousel layouts, feed posts, story sequences, reel thumbnails, and promotional ad creatives built for maximum visual retention.",
+    deliverables: ["Instagram Carousels & Posts", "Story & Reel Cover Graphics", "Ad Campaign Banners", "Content Templates"],
+  },
+  {
+    icon: Feather,
     number: "02",
-    title: "Common Ground",
-    category: "Editorial system",
-    year: "2024",
-    description: "A printed conversation about shared spaces, told through modular type and collected voices.",
-    palette: "yellow",
-    visual: "orbit",
+    label: "Logo Design",
+    highlight: "Distinctive Brand Marks",
+    detail:
+      "Memorable logos, custom wordmarks, monograms, and iconic emblems crafted with precision geometry for lasting brand recognition.",
+    deliverables: ["Primary & Secondary Logos", "Monogram & Submarks", "Vector Master Files (SVG/EPS)", "Logo Usage Rules"],
   },
   {
+    icon: Layers3,
     number: "03",
-    title: "Soft Evidence",
-    category: "Illustration",
-    year: "2024",
-    description: "An illustrated visual language for the details we usually pass by: gestures, objects and quiet rituals.",
-    palette: "paper",
-    visual: "paper",
+    label: "Branding Design",
+    highlight: "Cohesive Visual Systems",
+    detail:
+      "End-to-end brand identity architecture including typography hierarchy, color theory, brand style guides, and collateral design.",
+    deliverables: ["Visual Identity Systems", "Color Palettes & Typography", "Brand Guidelines Book", "Marketing Collateral"],
   },
   {
+    icon: Box,
     number: "04",
-    title: "New Frequency",
-    category: "Art direction",
-    year: "2023",
-    description: "A visual toolkit for an independent radio series, tuned for motion, digital and the street.",
-    palette: "ink",
-    visual: "type",
+    label: "Packaging Design",
+    highlight: "Shelf-Ready Physical Goods",
+    detail:
+      "Custom product packaging, box structural dielines, bottle/can labels, retail pouches, and unboxing collateral ready for manufacturing.",
+    deliverables: ["Custom Box & Carton Dielines", "Bottle, Can & Jar Labels", "Pouch & Bag Packaging", "Print-Ready Dieline Files"],
+  },
+  {
+    icon: Printer,
+    number: "05",
+    label: "Printing Design",
+    highlight: "Tactile Print Collateral",
+    detail:
+      "High-precision CMYK and Pantone print layouts: brochures, business cards, flyers, banners, posters, menus, and editorial booklets.",
+    deliverables: ["Flyers & Tri-Fold Brochures", "Premium Business Cards", "Large-Format Posters & Banners", "Editorial & Catalogs"],
   },
 ];
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sanjeev — Graphic Designer & Illustrator" },
-      { name: "description", content: "The portfolio of Sanjeev, a graphic designer and illustrator creating expressive identities, editorial systems, and visual worlds." },
-      { property: "og:title", content: "Sanjeev — Graphic Designer & Illustrator" },
-      { property: "og:description", content: "Expressive identities, editorial systems, and visual worlds by Sanjeev." },
+      { title: "Sanjeev - Graphic Designer | Social Media, Logo, Branding, Packaging & Print" },
+      {
+        name: "description",
+        content:
+          "Sanjeev is a creative graphic designer specializing in Social Media Post Design, Logo Design, Branding Systems, Packaging Design, and Print Collateral.",
+      },
+      { property: "og:title", content: "Sanjeev - Creative Graphic Designer" },
+      {
+        property: "og:description",
+        content:
+          "High-impact graphic design by Sanjeev: Social Media Posts, Logo Design, Branding Systems, Packaging Dielines, and Print Collateral.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Portfolio,
+  component: SanjeevPortfolio,
 });
 
-function Portfolio() {
-  const [activeWork, setActiveWork] = useState(0);
+function SanjeevPortfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [filter, setFilter] = useState("All");
+  const [activeProject, setActiveProject] = useState<PortfolioProject>(portfolioProjects[0]);
+  const [filter, setFilter] = useState<string>("all");
 
-  const visibleWorks = filter === "All" ? works : works.filter((work) => work.category === filter);
-  const featured = works[activeWork];
-
-  if (!featured) {
-    return null;
-  }
-
-  const chooseWork = (work: Work) => {
-    const index = works.findIndex((item) => item.number === work.number);
-    setActiveWork(index < 0 ? 0 : index);
-  };
+  const filteredProjects =
+    filter === "all"
+      ? portfolioProjects
+      : portfolioProjects.filter((p) => p.category === filter);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <header className="border-b border-border bg-background/95">
-        <div className="mx-auto flex h-20 max-w-[1360px] items-center justify-between px-6 lg:px-10">
-          <a href="#top" className="display-type flex items-center gap-3 text-sm font-bold" onClick={() => setMenuOpen(false)}>
-            <span className="grid size-8 place-items-center bg-foreground text-xs text-background">S</span>
-            <span>SANJEEV<span className="text-signal">.</span></span>
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground selection:bg-signal selection:text-foreground">
+      {/* Top Header */}
+      <header className="sticky top-0 z-50 h-16 border-b border-border bg-background/90 backdrop-blur sm:h-18">
+        <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-4 sm:px-8 lg:px-12">
+          <a href="#top" className="display-type flex items-center gap-2.5 text-sm font-bold tracking-wider">
+            <span className="grid size-7 place-items-center bg-foreground text-xs text-background font-mono">S</span>
+            <span className="uppercase">SANJEEV<span className="text-signal">.</span></span>
           </a>
-          <nav className="hidden items-center gap-8 display-type text-[11px] uppercase tracking-[0.14em] md:flex">
-            <a href="#work" className="text-muted-foreground transition-colors hover:text-foreground">Work</a>
-            <a href="#about" className="text-muted-foreground transition-colors hover:text-foreground">About</a>
-            <a href="#contact" className="text-muted-foreground transition-colors hover:text-foreground">Contact</a>
+
+          <nav className="hidden items-center gap-7 display-type text-xs uppercase md:flex">
+            <a className="link-line" href="#services">Services</a>
+            <a className="link-line" href="#work">Work</a>
+            <a className="link-line" href="#about">About</a>
+            <a className="link-line" href="#contact">Contact</a>
           </nav>
-          <Button asChild size="sm" className="hidden rounded-none bg-foreground px-4 display-type text-[11px] uppercase tracking-[0.12em] text-background hover:bg-signal hover:text-foreground md:inline-flex">
-            <a href="#contact">Start a project <ArrowUpRight /></a>
-          </Button>
-          <Button aria-label={menuOpen ? "Close navigation" : "Open navigation"} variant="ghost" size="icon" className="md:hidden" onClick={() => setMenuOpen((open) => !open)}>
-            {menuOpen ? <X /> : <Menu />}
-          </Button>
+
+          <div className="flex items-center gap-3">
+            <Button
+              asChild
+              className="hidden h-10 rounded-none bg-foreground px-4 display-type text-xs uppercase text-background hover:bg-signal hover:text-foreground sm:h-11 sm:px-5 md:inline-flex"
+            >
+              <a href="#contact">
+                Start a project <ArrowUpRight className="ml-1.5 size-4" />
+              </a>
+            </Button>
+
+            <Button
+              aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+              variant="ghost"
+              size="icon"
+              className="rounded-none md:hidden"
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </Button>
+          </div>
         </div>
+
+        {/* Mobile Navigation Dropdown */}
         {menuOpen && (
-          <nav className="border-t border-border px-6 py-5 display-type text-xs uppercase tracking-[0.14em] md:hidden">
-            <div className="flex flex-col gap-5">
-              <a href="#work" onClick={() => setMenuOpen(false)}>Work</a>
-              <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
-              <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+          <nav className="border-t border-border bg-background/98 px-5 py-5 display-type text-sm uppercase md:hidden shadow-lg">
+            <div className="flex flex-col gap-4">
+              <a className="py-1 text-foreground hover:text-signal" href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+              <a className="py-1 text-foreground hover:text-signal" href="#work" onClick={() => setMenuOpen(false)}>Work</a>
+              <a className="py-1 text-foreground hover:text-signal" href="#about" onClick={() => setMenuOpen(false)}>About</a>
+              <a className="py-1 text-foreground hover:text-signal" href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
             </div>
           </nav>
         )}
       </header>
 
       <main id="top">
-        <section className="ruled-grid border-b border-border">
-          <div className="mx-auto max-w-[1360px] px-6 pb-16 pt-10 lg:px-10 lg:pb-24 lg:pt-16">
-            <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-6">
-              <div className="flex justify-between lg:col-span-1 lg:block">
-                <div className="display-type text-[10px] uppercase tracking-[0.16em] text-muted-foreground [writing-mode:vertical-rl]">Graphic design / illustration</div>
-                <div className="display-type text-[10px] uppercase tracking-[0.16em] text-muted-foreground lg:mt-28 lg:[writing-mode:vertical-rl]">Bengaluru · India</div>
+        {/* HERO SECTION - Sized to fit the desktop viewport gracefully */}
+        <section className="hero-grid flex flex-col justify-between border-b border-border lg:h-[calc(100svh-4.5rem)] lg:min-h-[620px] lg:max-h-[calc(100svh-4.5rem)]">
+          <div className="mx-auto flex w-full max-w-[1440px] flex-1 items-center px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-6">
+            <div className="grid w-full grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-12">
+              
+              {/* Vertical Side Tag on Desktop */}
+              <div className="hidden lg:col-span-1 lg:flex lg:flex-col lg:items-start lg:justify-center">
+                <p className="display-type vertical-label text-[11px] uppercase tracking-wider text-muted-foreground">
+                  Graphic • Brand • Print • Packaging
+                </p>
               </div>
-              <div className="relative lg:col-span-7">
-                <div className="display-type flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground"><span className="size-2 bg-signal" /> Portfolio / 2025</div>
-                <h1 className="display-type mt-8 text-[clamp(4.5rem,14vw,12.8rem)] font-bold leading-[0.78] tracking-[-0.075em] text-foreground">SAN<br /><span className="text-transparent [text-stroke:1px_currentColor]">JEEV</span></h1>
-                <div className="mt-10 max-w-[42rem] border-l-2 border-signal pl-5 sm:pl-7">
-                  <p className="max-w-[30ch] text-xl leading-[1.18] text-foreground/85 sm:text-2xl">I make identities, illustrations and visual systems that give good ideas a sharper point of view.</p>
-                  <div className="mt-7 flex flex-wrap items-center gap-5">
-                    <Button asChild className="h-12 rounded-none bg-foreground px-5 display-type text-[11px] uppercase tracking-[0.12em] text-background hover:bg-signal hover:text-foreground">
-                      <a href="#work">Explore selected work <ArrowDownRight /></a>
-                    </Button>
-                    <a href="#about" className="display-type text-[11px] uppercase tracking-[0.12em] text-muted-foreground underline decoration-signal underline-offset-4 transition-colors hover:text-foreground">The short version →</a>
-                  </div>
+
+              {/* Main Text Content */}
+              <div className="lg:col-span-6 xl:col-span-6">
+                <div className="display-type inline-flex items-center gap-2.5 bg-foreground px-3 py-1.5 text-[11px] uppercase text-background sm:px-3.5">
+                  <span className="size-2 animate-pulse bg-signal" />
+                  Available for new projects & briefs
+                </div>
+
+                <h1 className="display-type mt-4 text-5xl font-bold uppercase leading-[0.88] tracking-tight sm:mt-5 sm:text-7xl lg:text-[5.8rem] xl:text-[6.8rem]">
+                  Sanjeev
+                </h1>
+
+                <div className="mt-4 max-w-[540px] border-l-3 border-signal pl-3.5 sm:mt-5 sm:border-l-4 sm:pl-5">
+                  <p className="text-base font-semibold leading-snug sm:text-xl lg:text-[1.35rem]">
+                    Creative graphic designer shaping distinct visual identities, packaging, social content, and print that make brands stand out.
+                  </p>
+                  <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground sm:mt-3 sm:text-sm lg:text-[0.92rem]">
+                    Specializing in <span className="font-semibold text-foreground">Social Media Posts</span>, <span className="font-semibold text-foreground">Logo Design</span>, <span className="font-semibold text-foreground">Branding</span>, <span className="font-semibold text-foreground">Packaging</span>, and <span className="font-semibold text-foreground">Printing Design</span>.
+                  </p>
+                </div>
+
+                {/* Service Quick Tags */}
+                <div className="mt-4 flex flex-wrap gap-1.5 display-type text-[10px] uppercase sm:mt-5 sm:gap-2 sm:text-[11px]">
+                  {["Social Media", "Logo Design", "Branding", "Packaging", "Printing"].map((item) => (
+                    <span
+                      key={item}
+                      className="border border-border bg-studio-soft/60 px-2.5 py-1 text-foreground transition-colors hover:border-signal hover:bg-signal/20"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="mt-5 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:items-center sm:gap-3.5">
+                  <Button
+                    asChild
+                    className="h-10 rounded-none bg-foreground px-5 display-type text-xs uppercase text-background hover:bg-signal hover:text-foreground sm:h-11"
+                  >
+                    <a href="#work">
+                      View Selected Work <ArrowDownRight className="ml-1.5 size-4" />
+                    </a>
+                  </Button>
+                  <a
+                    href="mailto:hello@sanjeev.studio"
+                    className="display-type inline-flex h-10 items-center justify-center gap-2 border border-foreground bg-background/80 px-4 text-xs uppercase transition-colors hover:border-signal hover:bg-signal sm:h-11 sm:px-5"
+                  >
+                    <Mail className="size-4" />
+                    hello@sanjeev.studio
+                  </a>
                 </div>
               </div>
-              <div className="relative mt-2 lg:col-span-4 lg:mt-[-3.5rem]">
-                <div className="relative ml-auto max-w-[420px] border border-border bg-studio-soft/60 p-3">
-                  <div className="absolute -left-3 top-14 h-px w-20 bg-signal" />
-                  <div className="absolute -right-3 bottom-20 h-20 w-px bg-foreground/25" />
-                  <div className="aspect-[4/5] overflow-hidden bg-foreground/10">
-                    <img src={profileAsset.url} alt="Sanjeev in profile wearing a light textured knit" className="h-full w-full object-cover object-top grayscale" />
-                  </div>
-                  <div className="flex items-center justify-between pt-3 display-type text-[10px] uppercase tracking-[0.14em] text-muted-foreground"><span>Fig. 01 / Self portrait</span><span className="text-signal">●</span></div>
+
+              {/* Visual Frame Container - Height strictly controlled */}
+              <div className="relative flex h-[320px] w-full items-center justify-center sm:h-[400px] lg:col-span-5 lg:h-[440px] xl:h-[480px]">
+                {/* Graphic Backdrops */}
+                <div className="absolute inset-x-4 bottom-0 top-8 bg-signal sm:top-10" />
+                <div className="absolute -left-2 top-2 h-16 w-16 border border-foreground bg-background sm:h-24 sm:w-24" />
+                <div className="absolute bottom-6 -right-2 h-12 w-28 bg-foreground sm:bottom-8 sm:h-16 sm:w-36" />
+                
+                {/* Designer Portrait Image */}
+                <img
+                  src="/img1.png"
+                  alt="Black and white portrait of Sanjeev"
+                  className="relative z-10 h-full max-h-[320px] w-auto object-contain drop-shadow-md sm:max-h-[400px] lg:max-h-[440px] xl:max-h-[480px]"
+                />
+
+                {/* Floating Detail Badge */}
+                <div className="absolute right-0 top-0 z-20 w-36 border border-foreground bg-background p-2.5 shadow-sm sm:w-44 sm:p-3">
+                  <p className="display-type text-[10px] uppercase text-muted-foreground">Expertise</p>
+                  <p className="mt-1 text-xs font-bold leading-tight uppercase sm:text-sm">
+                    Print & Digital Visuals
+                  </p>
                 </div>
-                <div className="absolute -bottom-5 -left-2 hidden rotate-[-5deg] bg-signal px-4 py-3 display-type text-[10px] font-bold uppercase tracking-[0.14em] sm:block lg:-left-6">Make it matter.</div>
+
+                {/* Bottom Floating Stamp */}
+                <div className="absolute bottom-2 left-2 z-20 hidden border border-foreground bg-background px-3 py-1.5 display-type text-[10px] uppercase sm:block">
+                  <span className="text-signal font-bold">●</span> High-Impact Design
+                </div>
               </div>
+
             </div>
           </div>
+
+          {/* Bottom Capabilities Ticker Bar */}
           <div className="border-t border-border bg-foreground text-background">
-            <div className="mx-auto flex max-w-[1360px] flex-wrap items-center gap-x-8 gap-y-3 px-6 py-4 display-type text-[10px] uppercase tracking-[0.16em] lg:px-10"><span className="text-signal">Capabilities</span><span>Identity systems</span><span>Editorial</span><span>Illustration</span><span>Art direction</span><span>Motion-ready</span></div>
+            <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-2.5 display-type text-[11px] uppercase tracking-wider sm:px-8 sm:py-3 lg:px-12">
+              <span className="flex items-center gap-1.5 text-signal font-semibold">
+                <Sparkles className="size-3.5" /> Core Services:
+              </span>
+              <span className="transition-colors hover:text-signal">Social Media Post</span>
+              <span className="text-signal/60">•</span>
+              <span className="transition-colors hover:text-signal">Logo Design</span>
+              <span className="text-signal/60">•</span>
+              <span className="transition-colors hover:text-signal">Branding Design</span>
+              <span className="text-signal/60">•</span>
+              <span className="transition-colors hover:text-signal">Packaging Design</span>
+              <span className="text-signal/60">•</span>
+              <span className="transition-colors hover:text-signal">Printing Design</span>
+            </div>
           </div>
         </section>
 
-        <section id="work" className="scroll-mt-20 border-b border-border">
-          <div className="mx-auto max-w-[1360px] px-6 py-16 lg:px-10 lg:py-24">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-              <div><div className="display-type flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground"><span className="size-2 bg-signal" /> 01 / Selected work</div><h2 className="display-type mt-4 text-4xl font-bold tracking-[-0.04em] sm:text-5xl">The index</h2></div>
-              <div className="flex flex-wrap gap-x-5 gap-y-3 display-type text-[10px] uppercase tracking-[0.14em]">
-                {["All", "Brand identity", "Editorial system", "Illustration", "Art direction"].map((item) => <button key={item} onClick={() => setFilter(item)} className={filter === item ? "border-b-2 border-signal pb-1 text-foreground" : "pb-1 text-muted-foreground transition-colors hover:text-foreground"}>{item}</button>)}
+        {/* SERVICES / WHAT I DO SECTION */}
+        <section id="services" className="scroll-mt-20 border-b border-border bg-studio-soft/30">
+          <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8 lg:px-12 lg:py-24">
+            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+              <div>
+                <p className="eyebrow">01 / Capabilities & Services</p>
+                <h2 className="display-type mt-4 text-4xl font-bold uppercase leading-none sm:text-5xl lg:text-6xl">
+                  What I Design & Deliver.
+                </h2>
               </div>
+              <p className="max-w-[38ch] text-sm leading-relaxed text-muted-foreground sm:text-base">
+                A specialized creative service suite tailored for brands, creators, products, and businesses that need striking visual identity and production-ready artwork.
+              </p>
             </div>
-            <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-7">
-                <div className={`relative min-h-[360px] overflow-hidden border border-border p-7 sm:min-h-[470px] sm:p-10 ${featured.palette === "dark" || featured.palette === "ink" ? "bg-foreground text-background" : featured.palette === "yellow" ? "bg-signal text-foreground" : "bg-studio-soft text-foreground"}`}>
-                  <div className="absolute right-8 top-8 display-type text-[10px] uppercase tracking-[0.16em] opacity-60">Featured / {featured.year}</div>
-                  <div className="relative z-10 flex h-full min-h-[300px] flex-col justify-between"><div><div className="display-type text-[10px] uppercase tracking-[0.16em] opacity-60">{featured.category}</div><h3 className="display-type mt-5 max-w-[10ch] text-5xl font-bold leading-[0.95] tracking-[-0.06em] sm:text-7xl">{featured.title}</h3></div><div className="flex items-end justify-between gap-4"><p className="max-w-[32ch] text-sm leading-relaxed opacity-75">{featured.description}</p><span className="grid size-12 shrink-0 place-items-center border border-current"><ArrowUpRight /></span></div></div>
-                  <ProjectGraphic visual={featured.visual} />
+
+            {/* 5 Core Services Grid */}
+            <div className="mt-12 grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+              {portfolioCapabilities.map(({ icon: Icon, number, label, highlight, detail, deliverables }) => (
+                <div
+                  key={label}
+                  className="group flex flex-col justify-between bg-background p-6 transition-colors hover:bg-studio-soft/50 sm:p-7"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="display-type text-xs font-bold text-signal">{number}</span>
+                      <Icon className="size-6 text-foreground transition-transform group-hover:scale-110 group-hover:text-signal" />
+                    </div>
+
+                    <h3 className="display-type mt-8 text-xl font-bold uppercase leading-tight">
+                      {label}
+                    </h3>
+                    <p className="mt-1 text-xs font-semibold text-signal display-type uppercase">
+                      {highlight}
+                    </p>
+                    <p className="mt-3 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                      {detail}
+                    </p>
+                  </div>
+
+                  <div className="mt-6 border-t border-border pt-4">
+                    <p className="display-type text-[10px] uppercase text-muted-foreground">Deliverables:</p>
+                    <ul className="mt-2 space-y-1 text-xs text-foreground/85">
+                      {deliverables.map((item) => (
+                        <li key={item} className="flex items-center gap-1.5">
+                          <span className="size-1 bg-signal" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <div className="mt-4 flex items-center justify-between display-type text-[10px] uppercase tracking-[0.15em] text-muted-foreground"><span>Selected case / {featured.number}</span><span>Scroll to inspect <ArrowDownRight className="ml-1 inline size-3" /></span></div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* WORK / SELECTED PROJECTS SECTION */}
+        <section id="work" className="scroll-mt-20 border-b border-border">
+          <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8 lg:px-12 lg:py-24">
+            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+              <div>
+                <p className="eyebrow">02 / Selected Portfolio</p>
+                <h2 className="display-type mt-4 text-4xl font-bold uppercase leading-none sm:text-5xl lg:text-6xl">
+                  Featured Work.
+                </h2>
               </div>
-              <div className="lg:col-span-5">
-                <div className="border-t border-foreground">{visibleWorks.map((work) => <button key={work.number} onClick={() => chooseWork(work)} className={`group flex w-full items-start gap-4 border-b border-border py-5 text-left transition-colors hover:bg-studio-soft/50 ${featured.number === work.number ? "bg-studio-soft/40" : ""}`}><span className="display-type pt-1 text-[11px] text-signal">{work.number}</span><span className="min-w-0 flex-1"><span className="display-type block text-lg font-medium tracking-[-0.03em]">{work.title}</span><span className="mt-1 block display-type text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{work.category} / {work.year}</span></span><ArrowUpRight className="mt-1 size-4 text-muted-foreground transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></button>)}</div>
-                <div className="mt-10 border-l-2 border-signal pl-5"><p className="display-type text-xl font-medium leading-tight tracking-[-0.04em]">Every project starts with a question worth making visible.</p><p className="mt-4 max-w-[30ch] text-sm leading-relaxed text-muted-foreground">From the first sketch to the last exported frame, the work is built to live beyond the presentation.</p></div>
+              
+              {/* Category Filter Chips */}
+              <div className="flex flex-wrap gap-2 display-type text-xs uppercase">
+                {[
+                  { key: "all", label: "All Work" },
+                  { key: "social", label: "Social Media" },
+                  { key: "logo", label: "Logo Design" },
+                  { key: "branding", label: "Branding" },
+                  { key: "packaging", label: "Packaging" },
+                  { key: "print", label: "Printing" },
+                ].map((tab) => (
+                  <button
+                    key={tab.key}
+                    onClick={() => {
+                      setFilter(tab.key);
+                      const matched = tab.key === "all" ? portfolioProjects[0] : portfolioProjects.find(p => p.category === tab.key);
+                      if (matched) setActiveProject(matched);
+                    }}
+                    className={`border px-3 py-1.5 transition-colors ${
+                      filter === tab.key
+                        ? "border-foreground bg-foreground text-background"
+                        : "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
+              {/* Main Featured Project Display */}
+              <div className="lg:col-span-8">
+                <div className="grid grid-cols-1 border border-foreground md:grid-cols-2">
+                  {/* Visual Preview */}
+                  <div
+                    className={`relative min-h-[380px] overflow-hidden p-6 sm:min-h-[440px] ${
+                      activeProject.accent === "yellow"
+                        ? "bg-signal"
+                        : activeProject.accent === "ink"
+                          ? "bg-foreground text-background"
+                          : "bg-studio-soft text-foreground"
+                    }`}
+                  >
+                    <div className="absolute left-6 top-6 display-type text-xs uppercase opacity-75 font-semibold">
+                      Featured / {activeProject.year}
+                    </div>
+                    <ProjectVisual visual={activeProject.visual} />
+                  </div>
+
+                  {/* Project Details */}
+                  <div className="flex flex-col justify-between bg-background p-6 sm:p-8">
+                    <div>
+                      <p className="display-type text-xs font-bold uppercase text-signal">
+                        {activeProject.id} • {activeProject.service}
+                      </p>
+                      <h3 className="display-type mt-4 text-3xl font-bold uppercase leading-tight sm:text-4xl">
+                        {activeProject.title}
+                      </h3>
+                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                        {activeProject.summary}
+                      </p>
+
+                      <div className="mt-6 border-t border-border pt-4">
+                        <p className="display-type text-[11px] uppercase text-muted-foreground">Scope & Assets:</p>
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          {activeProject.deliverables.map((del) => (
+                            <span
+                              key={del}
+                              className="border border-border bg-studio-soft/50 px-2.5 py-1 text-[11px] display-type uppercase text-foreground"
+                            >
+                              {del}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 border-t border-border pt-5">
+                      <Button
+                        asChild
+                        className="w-full rounded-none bg-foreground px-5 display-type text-xs uppercase text-background hover:bg-signal hover:text-foreground sm:w-auto"
+                      >
+                        <a href="#contact">
+                          Inquire about this service <ArrowUpRight className="ml-1.5 size-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Project Navigation List */}
+              <div className="lg:col-span-4">
+                <p className="display-type text-xs uppercase text-muted-foreground pb-2">Select Project to View</p>
+                <div className="border-t border-foreground">
+                  {filteredProjects.map((project) => (
+                    <button
+                      key={project.id}
+                      onClick={() => setActiveProject(project)}
+                      className={`group grid w-full grid-cols-[2.5rem_1fr_auto] items-start gap-3 border-b border-border p-4 text-left transition-colors hover:bg-studio-soft/70 ${
+                        activeProject.id === project.id ? "bg-studio-soft border-l-4 border-l-signal" : ""
+                      }`}
+                    >
+                      <span className="display-type text-xs font-bold text-signal pt-0.5">{project.id}</span>
+                      <span className="min-w-0">
+                        <span className="display-type block text-base font-bold uppercase truncate">
+                          {project.title}
+                        </span>
+                        <span className="mt-0.5 block text-xs text-muted-foreground">
+                          {project.service}
+                        </span>
+                      </span>
+                      <ArrowUpRight className="size-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
+        {/* ABOUT SECTION */}
         <section id="about" className="scroll-mt-20 border-b border-border">
-          <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-12 px-6 py-16 lg:grid-cols-12 lg:gap-10 lg:px-10 lg:py-24">
-            <div className="lg:col-span-3"><div className="display-type flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground"><span className="size-2 bg-signal" /> 02 / About</div><div className="mt-12 hidden aspect-[3/4] overflow-hidden bg-foreground lg:block"><img src={sunglassesAsset.url} alt="Sanjeev wearing sunglasses and a patterned shirt" className="h-full w-full object-cover object-top grayscale" /></div></div>
-            <div className="lg:col-span-6 lg:col-start-5"><h2 className="display-type max-w-[17ch] text-4xl font-bold leading-[1.02] tracking-[-0.06em] sm:text-6xl">Good design should feel obvious only after you see it.</h2><p className="mt-10 max-w-[43ch] text-lg leading-relaxed text-foreground/75">I’m Sanjeev, a graphic designer and illustrator focused on the space between a clear idea and a memorable image. I work with people who care about the details, and turn the messy middle into something that feels inevitable.</p><div className="mt-12 grid max-w-[520px] grid-cols-2 border-t border-border sm:grid-cols-3"><div className="border-r border-border py-4"><span className="display-type block text-2xl font-bold">10+</span><span className="mt-1 block display-type text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Years making</span></div><div className="border-r border-border py-4 pl-4"><span className="display-type block text-2xl font-bold">60+</span><span className="mt-1 block display-type text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Projects shaped</span></div><div className="py-4 pl-4"><span className="display-type block text-2xl font-bold text-signal">Open</span><span className="mt-1 block display-type text-[10px] uppercase tracking-[0.12em] text-muted-foreground">For select work</span></div></div></div>
+          <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-12 px-4 py-16 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-24">
+            
+            {/* Visual Image / Graphics */}
+            <div className="relative min-h-[460px] lg:col-span-5">
+              <div className="absolute inset-x-6 bottom-0 top-10 bg-foreground" />
+              <div className="absolute left-0 top-0 h-20 w-36 bg-signal" />
+              <img
+                src="/img2.png"
+                alt="Black and white portrait of Sanjeev in sunglasses"
+                className="absolute bottom-0 left-1/2 h-[440px] w-auto max-w-none -translate-x-1/2 object-contain sm:h-[500px]"
+              />
+              <div className="absolute bottom-4 right-2 border border-background bg-background px-3 py-2 display-type text-xs uppercase text-foreground">
+                Sanjeev / Creative Designer
+              </div>
+            </div>
+
+            {/* About Text */}
+            <div className="lg:col-span-7 lg:pl-6">
+              <p className="eyebrow">03 / About Sanjeev</p>
+              <h2 className="display-type mt-4 text-4xl font-bold uppercase leading-tight sm:text-5xl lg:text-6xl">
+                Turning concepts into clean, memorable, and print-ready reality.
+              </h2>
+
+              <p className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Hello! I am <span className="font-semibold text-foreground">Sanjeev</span>, a dedicated creative graphic designer. My core passion lies in crafting high-converting social media creatives, iconic logos, complete brand identities, eye-catching product packaging, and meticulous print-ready files.
+              </p>
+
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Whether you need a fresh visual system from scratch, an engaging Instagram carousel campaign, custom box dielines for retail manufacturing, or luxury printed marketing collateral, I combine design precision with strategic thinking to make your brand shine.
+              </p>
+
+              {/* 3 Core Workflow Pillars */}
+              <div className="mt-8 grid grid-cols-1 border-t border-border sm:grid-cols-3">
+                {[
+                  { title: "Digital First", sub: "Social posts, RGB visuals & high-res vector logos." },
+                  { title: "Print Master", sub: "CMYK, Pantone, bleed accuracy & dieline expertise." },
+                  { title: "Brand Cohesion", sub: "Harmonious color palettes & typography systems." },
+                ].map((item) => (
+                  <div key={item.title} className="border-b border-border py-5 sm:border-b-0 sm:border-r sm:pr-4 sm:last:border-r-0">
+                    <span className="display-type block text-lg font-bold uppercase">{item.title}</span>
+                    <span className="mt-1.5 block text-xs leading-relaxed text-muted-foreground">{item.sub}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
+        {/* CONTACT SECTION */}
         <section id="contact" className="scroll-mt-20 bg-foreground text-background">
-          <div className="mx-auto max-w-[1360px] px-6 py-20 lg:px-10 lg:py-28"><div className="display-type flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-background/55"><span className="size-2 bg-signal" /> 03 / Contact</div><div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-end"><h2 className="display-type text-5xl font-bold leading-[0.9] tracking-[-0.06em] sm:text-7xl lg:col-span-7">Have an idea?<br /><span className="text-signal">Let’s give it form.</span></h2><div className="lg:col-span-4 lg:col-start-9"><p className="max-w-[30ch] text-base leading-relaxed text-background/70">Tell me what you’re building, what it needs to say, or just where it feels stuck.</p><Button asChild className="mt-7 h-12 rounded-none bg-signal px-5 display-type text-[11px] uppercase tracking-[0.12em] text-foreground hover:bg-background"><a href="mailto:hello@sanjeev.studio">hello@sanjeev.studio <ArrowUpRight /></a></Button></div></div></div>
+          <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8 lg:px-12 lg:py-24">
+            <p className="display-type text-xs uppercase text-background/60">04 / Collaborate & Hire</p>
+            
+            <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <h2 className="display-type text-4xl font-bold uppercase leading-none sm:text-6xl lg:text-7xl">
+                  Let’s bring your next project to life.
+                </h2>
+                <div className="mt-6 flex flex-wrap gap-2 display-type text-xs uppercase text-background/80">
+                  <span className="border border-background/20 px-3 py-1 bg-background/5">Social Media Posts</span>
+                  <span className="border border-background/20 px-3 py-1 bg-background/5">Logo Design</span>
+                  <span className="border border-background/20 px-3 py-1 bg-background/5">Branding Design</span>
+                  <span className="border border-background/20 px-3 py-1 bg-background/5">Packaging Design</span>
+                  <span className="border border-background/20 px-3 py-1 bg-background/5">Printing Design</span>
+                </div>
+              </div>
+
+              <div className="lg:col-span-4">
+                <p className="text-sm leading-relaxed text-background/70 sm:text-base">
+                  Have an upcoming campaign, a product needing packaging, a new business needing a logo, or print collateral to produce? Let's discuss your brief.
+                </p>
+                <Button
+                  asChild
+                  className="mt-6 h-12 w-full rounded-none bg-signal px-6 display-type text-xs uppercase text-foreground hover:bg-background sm:w-auto"
+                >
+                  <a href="mailto:hello@sanjeev.studio">
+                    Send Project Brief <ArrowUpRight className="ml-1.5 size-4" />
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
 
-      <footer className="bg-foreground text-background"><div className="mx-auto flex max-w-[1360px] flex-col gap-5 border-t border-background/15 px-6 py-8 display-type text-[10px] uppercase tracking-[0.14em] text-background/55 sm:flex-row sm:items-center sm:justify-between lg:px-10"><span>© 2025 Sanjeev / Graphic designer & illustrator</span><div className="flex gap-6"><a href="#top" className="transition-colors hover:text-background">Back to top <CircleArrowUp className="ml-1 inline size-3" /></a><a href="mailto:hello@sanjeev.studio" className="transition-colors hover:text-background">Email</a></div></div></footer>
+      {/* FOOTER */}
+      <footer className="bg-foreground text-background">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-4 border-t border-background/15 px-4 py-8 display-type text-xs uppercase text-background/60 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
+          <span>© 2026 Sanjeev / Graphic, Brand, Packaging & Print Designer</span>
+          <div className="flex gap-6">
+            <a href="#top" className="transition-colors hover:text-background">
+              Back to top <CircleArrowUp className="ml-1 inline size-3.5" />
+            </a>
+            <a href="mailto:hello@sanjeev.studio" className="transition-colors hover:text-background">
+              hello@sanjeev.studio
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
 
-function ProjectGraphic({ visual }: { visual: Work["visual"] }) {
-  if (visual === "sun") return <div aria-hidden="true" className="absolute -bottom-20 -right-12 size-72 rounded-full border-[3rem] border-signal opacity-90 sm:size-96"><div className="absolute -left-12 top-1/2 h-px w-[30rem] -rotate-45 bg-signal/70" /><div className="absolute -left-4 top-1/2 h-px w-[22rem] rotate-45 bg-signal/70" /></div>;
-  if (visual === "orbit") return <div aria-hidden="true" className="absolute -bottom-20 -right-14 size-80 rounded-full border border-foreground/40 sm:size-[26rem]"><div className="absolute inset-8 rounded-full border border-foreground/30" /><div className="absolute inset-20 rounded-full border border-foreground/20" /><span className="absolute right-8 top-10 size-5 rounded-full bg-foreground" /></div>;
-  if (visual === "paper") return <div aria-hidden="true" className="absolute bottom-[-2rem] right-[-2rem] size-64 rotate-12 border border-foreground/30 bg-background/30 sm:size-80"><div className="absolute inset-6 border border-foreground/25" /><div className="absolute left-1/2 top-0 h-full w-px bg-foreground/20" /><div className="absolute left-0 top-1/2 h-px w-full bg-foreground/20" /></div>;
-  return <div aria-hidden="true" className="absolute bottom-[-1.5rem] right-[-1rem] display-type text-[12rem] font-bold leading-none opacity-20 sm:text-[16rem]">A</div>;
+{/* Dynamic Visual Mockup Representation for Each Discipline */}
+function ProjectVisual({ visual }: { visual: PortfolioProject["visual"] }) {
+  if (visual === "social") {
+    return (
+      <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        {/* Social media carousel & feed preview cards */}
+        <div className="relative h-64 w-52 rotate-[-5deg] border-2 border-foreground bg-background p-4 shadow-xl">
+          <div className="flex items-center justify-between border-b border-border pb-2">
+            <div className="size-3 rounded-full bg-signal" />
+            <span className="display-type text-[9px] uppercase font-bold">@aura_fitness</span>
+            <span className="text-[9px]">•••</span>
+          </div>
+          <div className="mt-3 aspect-square bg-foreground text-background p-3 flex flex-col justify-between">
+            <span className="display-type text-xl font-bold uppercase leading-none">PEAK MOTION</span>
+            <div className="flex justify-between items-end">
+              <span className="display-type text-[8px] bg-signal text-foreground px-1 py-0.5 uppercase">Swipe 1/5 →</span>
+              <span className="size-4 bg-signal rounded-full" />
+            </div>
+          </div>
+          <div className="mt-2.5 flex items-center gap-1.5 display-type text-[9px] uppercase font-semibold">
+            <span>❤️ 1.4K</span>
+            <span>💬 280</span>
+          </div>
+        </div>
+
+        <div className="absolute right-6 bottom-8 h-48 w-40 rotate-[8deg] border-2 border-foreground bg-signal p-3 shadow-lg">
+          <div className="display-type text-xs font-bold uppercase text-foreground">STORY AD</div>
+          <div className="mt-4 border border-foreground/30 bg-background/80 p-2 display-type text-[10px] uppercase font-bold">
+            NEW DROP 2026
+          </div>
+          <div className="mt-8 text-center bg-foreground text-background py-1.5 display-type text-[9px] uppercase font-bold">
+            Shop Now ↑
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual === "logo") {
+    return (
+      <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        {/* Geometric logo construction diagram */}
+        <div className="relative size-60 border border-background/40 flex items-center justify-center">
+          <div className="absolute size-44 rounded-full border border-background/30" />
+          <div className="absolute size-32 rotate-45 border border-signal" />
+          <div className="relative z-10 flex flex-col items-center">
+            <span className="display-type text-7xl font-bold leading-none tracking-tighter text-background">
+              K<span className="text-signal">.</span>
+            </span>
+            <span className="display-type mt-2 text-[10px] uppercase tracking-[0.25em] text-background/80">
+              KANSO STUDIO
+            </span>
+          </div>
+          <div className="absolute -bottom-3 -right-3 bg-signal px-2 py-1 display-type text-[8px] uppercase font-bold text-foreground">
+            Vector Grid 1:1.618
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual === "branding") {
+    return (
+      <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        {/* Branding identity spread & color swatches */}
+        <div className="relative h-64 w-52 rotate-[-4deg] border border-foreground bg-background p-4 shadow-lg">
+          <div className="display-type text-xs font-bold uppercase">VERVE</div>
+          <div className="mt-1 display-type text-[9px] uppercase text-muted-foreground">Brand Identity Guide</div>
+          
+          <div className="mt-4 grid grid-cols-3 gap-1.5">
+            <div className="h-10 bg-foreground" />
+            <div className="h-10 bg-signal" />
+            <div className="h-10 bg-studio-soft" />
+          </div>
+
+          <div className="mt-4 border-t border-border pt-2">
+            <span className="display-type text-[10px] font-bold block">Aa Bb Cc 123</span>
+            <span className="text-[8px] text-muted-foreground block mt-1">Typography & Visual System</span>
+          </div>
+        </div>
+
+        <div className="absolute right-4 top-10 h-36 w-44 rotate-[6deg] border border-foreground bg-foreground p-3 text-background shadow-md">
+          <span className="display-type text-xs font-bold uppercase text-signal">STATIONERY</span>
+          <div className="mt-3 border border-background/30 p-2 display-type text-[9px]">
+            Business Card Mockup
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visual === "packaging") {
+    return (
+      <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        {/* Product Box & Packaging Label Dieline Mockup */}
+        <div className="relative h-64 w-44 border-2 border-foreground bg-background p-3 shadow-2xl flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-center border-b border-foreground pb-1.5">
+              <span className="display-type text-[9px] font-bold uppercase">NECTAR</span>
+              <span className="display-type text-[8px] bg-foreground text-background px-1">COLD BREW</span>
+            </div>
+            <div className="mt-4 border border-border bg-studio-soft/60 p-2 text-center">
+              <span className="display-type text-2xl font-bold block">12 FL OZ</span>
+              <span className="display-type text-[8px] uppercase text-muted-foreground">Organic Arabica</span>
+            </div>
+          </div>
+          <div className="border-t-2 border-foreground pt-2">
+            <span className="display-type text-[8px] uppercase font-bold block">Dieline Spec: Box-04</span>
+            <div className="mt-1 h-3 bg-signal w-full" />
+          </div>
+        </div>
+
+        <div className="absolute -right-4 bottom-10 h-40 w-32 rotate-[12deg] border-2 border-foreground bg-foreground p-3 text-background">
+          <span className="display-type text-[9px] uppercase font-bold text-signal">RETAIL POUCH</span>
+          <div className="mt-6 border border-background/30 p-1.5 text-center display-type text-[8px]">
+            Shelf Appeal
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Printing Design Visual Spread
+  return (
+    <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center overflow-hidden">
+      {/* Editorial brochure & metallic print layout */}
+      <div className="relative h-64 w-56 rotate-[-3deg] border-2 border-background/80 bg-foreground text-background p-4 shadow-xl">
+        <div className="flex justify-between items-center">
+          <span className="display-type text-[10px] font-bold text-signal uppercase">EXPO 2026</span>
+          <span className="display-type text-[8px] border border-background/40 px-1">CMYK + FOIL</span>
+        </div>
+        
+        <div className="mt-6 display-type text-3xl font-bold uppercase leading-tight">
+          MONO<br />LITH
+        </div>
+
+        <div className="mt-6 border-t border-background/30 pt-2 flex justify-between display-type text-[8px] uppercase text-background/70">
+          <span>Tri-Fold Brochure</span>
+          <span>300 DPI</span>
+        </div>
+      </div>
+
+      <div className="absolute right-4 top-8 h-40 w-32 rotate-[10deg] border border-background bg-signal p-3 text-foreground shadow-md">
+        <span className="display-type text-[9px] font-bold uppercase">VIP PASS</span>
+        <div className="mt-4 border border-foreground p-1 text-center display-type text-[9px] font-bold">
+          ACCESS ALL
+        </div>
+      </div>
+    </div>
+  );
 }

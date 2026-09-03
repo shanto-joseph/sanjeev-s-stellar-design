@@ -10,8 +10,8 @@
  * The @theme inline block maps CSS custom properties to Tailwind utility
  * classes (e.g. --color-primary -> bg-primary, text-primary).
  *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
+ * The :root and .dark blocks define the actual color values.
+ * The portfolio brand tokens use the supplied hex palette.
  *
  * To add a new semantic color:
  * 1. Add the variable to :root (light value) and .dark (dark value)
@@ -70,11 +70,11 @@
 
 :root {
   --radius: 0.25rem;
-  --studio: oklch(0.975 0.003 106);
-  --studio-soft: oklch(0.89 0.003 106);
-  --signal: oklch(0.8 0.17 80);
-  --ink-soft: oklch(0.31 0 0);
-  --ink-faint: oklch(0.31 0 0 / 55%);
+  --studio: #dfdfdf;
+  --studio-soft: #cfcfcf;
+  --signal: #f7bb36;
+  --ink-soft: #181818;
+  --ink-faint: rgb(24 24 24 / 62%);
   --background: var(--studio);
   --foreground: var(--ink-soft);
   --card: oklch(0.99 0.002 106);
@@ -91,8 +91,8 @@
   --accent-foreground: var(--ink-soft);
   --destructive: oklch(0.58 0.2 27);
   --destructive-foreground: var(--studio);
-  --border: oklch(0.31 0 0 / 16%);
-  --input: oklch(0.31 0 0 / 20%);
+  --border: rgb(24 24 24 / 18%);
+  --input: rgb(24 24 24 / 24%);
   --ring: var(--signal);
   --chart-1: var(--signal);
   --chart-2: var(--ink-soft);
@@ -157,12 +157,71 @@
 
 @utility display-type {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 @utility ruled-grid {
   background-image: linear-gradient(to right, color-mix(in oklab, var(--color-foreground) 8%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklab, var(--color-foreground) 8%, transparent) 1px, transparent 1px);
   background-size: 3rem 3rem;
+}
+
+@utility hero-grid {
+  background:
+    linear-gradient(to right, color-mix(in oklab, var(--color-foreground) 11%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-foreground) 11%, transparent) 1px, transparent 1px),
+    var(--color-background);
+  background-size: 4rem 4rem;
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+  letter-spacing: 0;
+
+  &::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--color-signal);
+  }
+}
+
+@utility link-line {
+  position: relative;
+  color: var(--color-muted-foreground);
+  transition: color 180ms ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.35rem;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: var(--color-signal);
+    transition: transform 180ms ease;
+  }
+
+  &:hover {
+    color: var(--color-foreground);
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+@utility vertical-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
 @utility signal-rule {
