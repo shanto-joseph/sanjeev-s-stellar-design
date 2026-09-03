@@ -142,6 +142,39 @@
     border-color: var(--color-border);
   }
 
+  /* Modern sleek custom scrollbar */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-foreground) var(--color-background);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--color-foreground) 45%, transparent);
+    border-radius: 9999px;
+    transition: background-color 200ms ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-signal);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: var(--color-signal);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);

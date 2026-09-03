@@ -8,6 +8,7 @@ import {
   Layers3,
   Mail,
   Menu,
+  Phone,
   Printer,
   Share2,
   Sparkles,
@@ -96,47 +97,57 @@ const portfolioCapabilities = [
   {
     icon: Share2,
     number: "01",
+    tag: "Digital & Feed",
+    category: "social" as const,
     label: "Social Media Post",
-    highlight: "Engaging Feed & Ad Visuals",
+    highlight: "High-Converting Feed & Ads",
     detail:
-      "Custom carousel layouts, feed posts, story sequences, reel thumbnails, and promotional ad creatives built for maximum visual retention.",
-    deliverables: ["Instagram Carousels & Posts", "Story & Reel Cover Graphics", "Ad Campaign Banners", "Content Templates"],
+      "Strategic carousel layouts, multi-slide graphics, promotional announcements, and ad creatives designed to drive clicks and stop the scroll.",
+    deliverables: ["Instagram Carousel Posts", "Promo Ad Creatives", "Story Graphic Sets", "Content Layout Systems"],
   },
   {
     icon: Feather,
     number: "02",
+    tag: "Identity Core",
+    category: "logo" as const,
     label: "Logo Design",
-    highlight: "Distinctive Brand Marks",
+    highlight: "Distinctive & Timeless Marks",
     detail:
-      "Memorable logos, custom wordmarks, monograms, and iconic emblems crafted with precision geometry for lasting brand recognition.",
-    deliverables: ["Primary & Secondary Logos", "Monogram & Submarks", "Vector Master Files (SVG/EPS)", "Logo Usage Rules"],
+      "Memorable brand marks, typographic logotypes, monograms, and iconic emblems crafted with mathematical vector balance.",
+    deliverables: ["Primary & Sub-Logos", "Monograms & Icons", "100% Vector EPS/SVG", "Brand Usage Specs"],
   },
   {
     icon: Layers3,
     number: "03",
+    tag: "Visual Systems",
+    category: "branding" as const,
     label: "Branding Design",
-    highlight: "Cohesive Visual Systems",
+    highlight: "Cohesive Brand Worlds",
     detail:
-      "End-to-end brand identity architecture including typography hierarchy, color theory, brand style guides, and collateral design.",
-    deliverables: ["Visual Identity Systems", "Color Palettes & Typography", "Brand Guidelines Book", "Marketing Collateral"],
+      "End-to-end visual identity architecture: typography pairing rules, color theory palettes, brand guides, and collateral.",
+    deliverables: ["Brand Identity Systems", "Color & Type Rules", "Brand Guidelines Book", "Stationery Collateral"],
   },
   {
     icon: Box,
     number: "04",
+    tag: "Product & Shelf",
+    category: "packaging" as const,
     label: "Packaging Design",
     highlight: "Shelf-Ready Physical Goods",
     detail:
-      "Custom product packaging, box structural dielines, bottle/can labels, retail pouches, and unboxing collateral ready for manufacturing.",
-    deliverables: ["Custom Box & Carton Dielines", "Bottle, Can & Jar Labels", "Pouch & Bag Packaging", "Print-Ready Dieline Files"],
+      "Custom box dielines, bottle/can/jar labels, retail pouches, and unboxing aesthetics prepared for industrial manufacturing.",
+    deliverables: ["Custom Box Dielines", "Bottle & Jar Labels", "Retail Pouch Design", "Production Dieline Files"],
   },
   {
     icon: Printer,
     number: "05",
+    tag: "CMYK & Editorial",
+    category: "print" as const,
     label: "Printing Design",
-    highlight: "Tactile Print Collateral",
+    highlight: "Tactile Print Production",
     detail:
-      "High-precision CMYK and Pantone print layouts: brochures, business cards, flyers, banners, posters, menus, and editorial booklets.",
-    deliverables: ["Flyers & Tri-Fold Brochures", "Premium Business Cards", "Large-Format Posters & Banners", "Editorial & Catalogs"],
+      "High-precision print layouts: tri-fold brochures, luxury business cards, large-format event posters, flyers, and catalogs.",
+    deliverables: ["Brochures & Flyers", "Premium Business Cards", "Large-Format Posters", "Editorial Catalogs"],
   },
 ];
 
@@ -178,7 +189,11 @@ function SanjeevPortfolio() {
       <header className="sticky top-0 z-50 h-16 border-b border-border bg-background/90 backdrop-blur sm:h-18">
         <div className="mx-auto flex h-full max-w-[1440px] items-center justify-between px-4 sm:px-8 lg:px-12">
           <a href="#top" className="display-type flex items-center gap-2.5 text-sm font-bold tracking-wider">
-            <span className="grid size-7 place-items-center bg-foreground text-xs text-background font-mono">S</span>
+            <img
+              src="/android-chrome-512x512.png"
+              alt="Sanjeev Logo"
+              className="size-7 object-contain rounded-sm"
+            />
             <span className="uppercase">SANJEEV<span className="text-signal">.</span></span>
           </a>
 
@@ -232,45 +247,33 @@ function SanjeevPortfolio() {
               
               {/* Vertical Side Tag on Desktop */}
               <div className="hidden lg:col-span-1 lg:flex lg:flex-col lg:items-start lg:justify-center">
-                <p className="display-type vertical-label text-[11px] uppercase tracking-wider text-muted-foreground">
-                  Graphic • Brand • Print • Packaging
+                <p className="display-type vertical-label text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Design • Direction • 2026
                 </p>
               </div>
 
               {/* Main Text Content */}
               <div className="lg:col-span-6 xl:col-span-6">
-                <div className="display-type inline-flex items-center gap-2.5 bg-foreground px-3 py-1.5 text-[11px] uppercase text-background sm:px-3.5">
+                <div className="display-type inline-flex items-center gap-2.5 bg-foreground px-3.5 py-1.5 text-[11px] uppercase tracking-wider text-background">
                   <span className="size-2 animate-pulse bg-signal" />
-                  Available for new projects & briefs
+                  Open For Select Design Briefs
                 </div>
 
                 <h1 className="display-type mt-4 text-5xl font-bold uppercase leading-[0.88] tracking-tight sm:mt-5 sm:text-7xl lg:text-[5.8rem] xl:text-[6.8rem]">
                   Sanjeev
                 </h1>
 
-                <div className="mt-4 max-w-[540px] border-l-3 border-signal pl-3.5 sm:mt-5 sm:border-l-4 sm:pl-5">
-                  <p className="text-base font-semibold leading-snug sm:text-xl lg:text-[1.35rem]">
-                    Creative graphic designer shaping distinct visual identities, packaging, social content, and print that make brands stand out.
+                <div className="mt-5 max-w-[540px] border-l-3 border-signal pl-4 sm:mt-6 sm:border-l-4 sm:pl-6">
+                  <p className="text-lg font-medium leading-snug sm:text-2xl lg:text-[1.4rem]">
+                    Creative graphic designer crafting captivating visual identities, physical packaging, and high-impact design that make ideas shine.
                   </p>
-                  <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground sm:mt-3 sm:text-sm lg:text-[0.92rem]">
-                    Specializing in <span className="font-semibold text-foreground">Social Media Posts</span>, <span className="font-semibold text-foreground">Logo Design</span>, <span className="font-semibold text-foreground">Branding</span>, <span className="font-semibold text-foreground">Packaging</span>, and <span className="font-semibold text-foreground">Printing Design</span>.
+                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground sm:mt-4 sm:text-sm lg:text-base">
+                    Focused on clean concept execution, strong typographic rhythm, and production-ready artwork built for real-world impact.
                   </p>
-                </div>
-
-                {/* Service Quick Tags */}
-                <div className="mt-4 flex flex-wrap gap-1.5 display-type text-[10px] uppercase sm:mt-5 sm:gap-2 sm:text-[11px]">
-                  {["Social Media", "Logo Design", "Branding", "Packaging", "Printing"].map((item) => (
-                    <span
-                      key={item}
-                      className="border border-border bg-studio-soft/60 px-2.5 py-1 text-foreground transition-colors hover:border-signal hover:bg-signal/20"
-                    >
-                      {item}
-                    </span>
-                  ))}
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="mt-5 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:items-center sm:gap-3.5">
+                <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:items-center sm:gap-3.5">
                   <Button
                     asChild
                     className="h-10 rounded-none bg-foreground px-5 display-type text-xs uppercase text-background hover:bg-signal hover:text-foreground sm:h-11"
@@ -280,11 +283,11 @@ function SanjeevPortfolio() {
                     </a>
                   </Button>
                   <a
-                    href="mailto:hello@sanjeev.studio"
+                    href="mailto:sanjeevsanju281@gmail.com"
                     className="display-type inline-flex h-10 items-center justify-center gap-2 border border-foreground bg-background/80 px-4 text-xs uppercase transition-colors hover:border-signal hover:bg-signal sm:h-11 sm:px-5"
                   >
                     <Mail className="size-4" />
-                    hello@sanjeev.studio
+                    sanjeevsanju281@gmail.com
                   </a>
                 </div>
               </div>
@@ -304,112 +307,93 @@ function SanjeevPortfolio() {
                 />
 
                 {/* Floating Detail Badge */}
-                <div className="absolute right-0 top-0 z-20 w-36 border border-foreground bg-background p-2.5 shadow-sm sm:w-44 sm:p-3">
-                  <p className="display-type text-[10px] uppercase text-muted-foreground">Expertise</p>
-                  <p className="mt-1 text-xs font-bold leading-tight uppercase sm:text-sm">
-                    Print & Digital Visuals
+                <div className="absolute right-0 top-0 z-20 w-44 border border-foreground bg-background p-3 shadow-md sm:w-52 sm:p-3.5">
+                  <p className="display-type text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Creative Ethos</p>
+                  <p className="mt-1 text-xs font-bold leading-tight uppercase sm:text-sm text-foreground">
+                    Where Good Ideas Take Shape
                   </p>
                 </div>
 
                 {/* Bottom Floating Stamp */}
-                <div className="absolute bottom-2 left-2 z-20 hidden border border-foreground bg-background px-3 py-1.5 display-type text-[10px] uppercase sm:block">
-                  <span className="text-signal font-bold">●</span> High-Impact Design
+                <div className="absolute bottom-2 left-2 z-20 hidden border border-foreground bg-background px-3 py-1.5 display-type text-[10px] uppercase sm:block shadow-sm">
+                  <span className="text-signal font-bold">●</span> Precision • Character • Impact
                 </div>
               </div>
 
             </div>
           </div>
 
-          {/* Bottom Capabilities Ticker Bar */}
-          <div className="border-t border-border bg-foreground text-background">
-            <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-2.5 display-type text-[11px] uppercase tracking-wider sm:px-8 sm:py-3 lg:px-12">
-              <span className="flex items-center gap-1.5 text-signal font-semibold">
-                <Sparkles className="size-3.5" /> Core Services:
-              </span>
-              <span className="transition-colors hover:text-signal">Social Media Post</span>
-              <span className="text-signal/60">•</span>
-              <span className="transition-colors hover:text-signal">Logo Design</span>
-              <span className="text-signal/60">•</span>
-              <span className="transition-colors hover:text-signal">Branding Design</span>
-              <span className="text-signal/60">•</span>
-              <span className="transition-colors hover:text-signal">Packaging Design</span>
-              <span className="text-signal/60">•</span>
-              <span className="transition-colors hover:text-signal">Printing Design</span>
-            </div>
-          </div>
         </section>
 
-        {/* SERVICES / WHAT I DO SECTION */}
-        <section id="services" className="scroll-mt-20 border-b border-border bg-studio-soft/30">
-          <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8 lg:px-12 lg:py-24">
-            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        {/* SERVICES / WHAT I DO SECTION - Compact & Sleek */}
+        <section id="services" className="scroll-mt-20 border-b border-border bg-studio-soft/20">
+          <div className="mx-auto max-w-[1440px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
+            {/* Compact Header */}
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div>
-                <p className="eyebrow">01 / Capabilities & Services</p>
-                <h2 className="display-type mt-4 text-4xl font-bold uppercase leading-none sm:text-5xl lg:text-6xl">
-                  What I Design & Deliver.
+                <p className="eyebrow">01 / Services</p>
+                <h2 className="display-type mt-2 text-3xl font-bold uppercase leading-tight sm:text-4xl lg:text-5xl">
+                  What I Design & Deliver
                 </h2>
               </div>
-              <p className="max-w-[38ch] text-sm leading-relaxed text-muted-foreground sm:text-base">
-                A specialized creative service suite tailored for brands, creators, products, and businesses that need striking visual identity and production-ready artwork.
+              <p className="max-w-[42ch] text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                5 specialized disciplines tailored for brands, products, and campaigns across digital screens and physical production.
               </p>
             </div>
 
-            {/* 5 Core Services Grid */}
-            <div className="mt-12 grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-              {portfolioCapabilities.map(({ icon: Icon, number, label, highlight, detail, deliverables }) => (
-                <div
+            {/* Compact 5 Services Grid */}
+            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+              {portfolioCapabilities.map(({ icon: Icon, number, tag, category, label, detail }) => (
+                <button
                   key={label}
-                  className="group flex flex-col justify-between bg-background p-6 transition-colors hover:bg-studio-soft/50 sm:p-7"
+                  onClick={() => {
+                    setFilter(category);
+                    const matched = portfolioProjects.find((p) => p.category === category);
+                    if (matched) setActiveProject(matched);
+                    document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="group relative flex flex-col justify-between border border-border bg-background p-4 text-left transition-all hover:border-foreground hover:bg-studio-soft/40 sm:p-5"
                 >
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="display-type text-xs font-bold text-signal">{number}</span>
-                      <Icon className="size-6 text-foreground transition-transform group-hover:scale-110 group-hover:text-signal" />
-                    </div>
+                  <div className="flex items-center justify-between">
+                    <span className="display-type text-[11px] font-bold uppercase tracking-wider text-signal">{number}</span>
+                    <Icon className="size-4 text-foreground/80 transition-transform group-hover:scale-110 group-hover:text-signal" />
+                  </div>
 
-                    <h3 className="display-type mt-8 text-xl font-bold uppercase leading-tight">
+                  <div className="mt-4">
+                    <h3 className="display-type text-base font-bold uppercase leading-tight group-hover:text-foreground">
                       {label}
                     </h3>
-                    <p className="mt-1 text-xs font-semibold text-signal display-type uppercase">
-                      {highlight}
-                    </p>
-                    <p className="mt-3 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                       {detail}
                     </p>
                   </div>
 
-                  <div className="mt-6 border-t border-border pt-4">
-                    <p className="display-type text-[10px] uppercase text-muted-foreground">Deliverables:</p>
-                    <ul className="mt-2 space-y-1 text-xs text-foreground/85">
-                      {deliverables.map((item) => (
-                        <li key={item} className="flex items-center gap-1.5">
-                          <span className="size-1 bg-signal" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="mt-4 flex items-center justify-between border-t border-border/80 pt-2.5 display-type text-[10px] uppercase tracking-wider text-muted-foreground group-hover:text-foreground">
+                    <span className="font-semibold">{tag}</span>
+                    <ArrowDownRight className="size-3 text-signal transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
         </section>
 
-        {/* WORK / SELECTED PROJECTS SECTION */}
-        <section id="work" className="scroll-mt-20 border-b border-border">
-          <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-8 lg:px-12 lg:py-24">
-            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        {/* WORK / SELECTED PROJECTS SECTION - Screen-Fit Proportions */}
+        <section id="work" className="scroll-mt-20 border-b border-border lg:min-h-[calc(100svh-4.5rem)] lg:flex lg:flex-col lg:justify-center">
+          <div className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-8">
+            {/* Header with Title & Category Filters */}
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div>
                 <p className="eyebrow">02 / Selected Portfolio</p>
-                <h2 className="display-type mt-4 text-4xl font-bold uppercase leading-none sm:text-5xl lg:text-6xl">
-                  Featured Work.
+                <h2 className="display-type mt-2 text-3xl font-bold uppercase leading-none sm:text-4xl lg:text-5xl">
+                  Featured Work
                 </h2>
               </div>
               
               {/* Category Filter Chips */}
-              <div className="flex flex-wrap gap-2 display-type text-xs uppercase">
+              <div className="flex flex-wrap gap-1.5 display-type text-[11px] uppercase sm:gap-2">
                 {[
-                  { key: "all", label: "All Work" },
+                  { key: "all", label: "All" },
                   { key: "social", label: "Social Media" },
                   { key: "logo", label: "Logo Design" },
                   { key: "branding", label: "Branding" },
@@ -423,9 +407,9 @@ function SanjeevPortfolio() {
                       const matched = tab.key === "all" ? portfolioProjects[0] : portfolioProjects.find(p => p.category === tab.key);
                       if (matched) setActiveProject(matched);
                     }}
-                    className={`border px-3 py-1.5 transition-colors ${
+                    className={`border px-3 py-1 transition-colors ${
                       filter === tab.key
-                        ? "border-foreground bg-foreground text-background"
+                        ? "border-foreground bg-foreground text-background font-bold"
                         : "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground"
                     }`}
                   >
@@ -435,13 +419,14 @@ function SanjeevPortfolio() {
               </div>
             </div>
 
-            <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
+            {/* Showcase Grid Container */}
+            <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-10">
               {/* Main Featured Project Display */}
               <div className="lg:col-span-8">
-                <div className="grid grid-cols-1 border border-foreground md:grid-cols-2">
-                  {/* Visual Preview */}
+                <div className="grid grid-cols-1 border border-foreground md:grid-cols-2 shadow-sm">
+                  {/* Visual Preview Frame */}
                   <div
-                    className={`relative min-h-[380px] overflow-hidden p-6 sm:min-h-[440px] ${
+                    className={`relative flex h-[280px] sm:h-[340px] lg:h-[360px] xl:h-[390px] overflow-hidden p-5 sm:p-6 ${
                       activeProject.accent === "yellow"
                         ? "bg-signal"
                         : activeProject.accent === "ink"
@@ -449,32 +434,32 @@ function SanjeevPortfolio() {
                           : "bg-studio-soft text-foreground"
                     }`}
                   >
-                    <div className="absolute left-6 top-6 display-type text-xs uppercase opacity-75 font-semibold">
-                      Featured / {activeProject.year}
+                    <div className="absolute left-5 top-5 z-20 display-type text-[11px] uppercase opacity-80 font-bold">
+                      Case {activeProject.id} / {activeProject.year}
                     </div>
                     <ProjectVisual visual={activeProject.visual} />
                   </div>
 
                   {/* Project Details */}
-                  <div className="flex flex-col justify-between bg-background p-6 sm:p-8">
+                  <div className="flex flex-col justify-between bg-background p-5 sm:p-6 lg:p-7">
                     <div>
-                      <p className="display-type text-xs font-bold uppercase text-signal">
+                      <p className="display-type text-[11px] font-bold uppercase tracking-wider text-signal">
                         {activeProject.id} • {activeProject.service}
                       </p>
-                      <h3 className="display-type mt-4 text-3xl font-bold uppercase leading-tight sm:text-4xl">
+                      <h3 className="display-type mt-2.5 text-2xl font-bold uppercase leading-tight sm:text-3xl lg:text-[1.85rem]">
                         {activeProject.title}
                       </h3>
-                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                      <p className="mt-3 text-xs leading-relaxed text-muted-foreground sm:text-sm">
                         {activeProject.summary}
                       </p>
 
-                      <div className="mt-6 border-t border-border pt-4">
-                        <p className="display-type text-[11px] uppercase text-muted-foreground">Scope & Assets:</p>
-                        <div className="mt-2 flex flex-wrap gap-1.5">
+                      <div className="mt-4 border-t border-border pt-3">
+                        <p className="display-type text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Deliverables:</p>
+                        <div className="mt-1.5 flex flex-wrap gap-1.5">
                           {activeProject.deliverables.map((del) => (
                             <span
                               key={del}
-                              className="border border-border bg-studio-soft/50 px-2.5 py-1 text-[11px] display-type uppercase text-foreground"
+                              className="border border-border bg-studio-soft/60 px-2 py-0.5 text-[10px] display-type uppercase font-semibold text-foreground"
                             >
                               {del}
                             </span>
@@ -483,13 +468,13 @@ function SanjeevPortfolio() {
                       </div>
                     </div>
 
-                    <div className="mt-8 border-t border-border pt-5">
+                    <div className="mt-5 border-t border-border pt-4">
                       <Button
                         asChild
-                        className="w-full rounded-none bg-foreground px-5 display-type text-xs uppercase text-background hover:bg-signal hover:text-foreground sm:w-auto"
+                        className="h-10 w-full rounded-none bg-foreground px-4 display-type text-xs uppercase text-background hover:bg-signal hover:text-foreground sm:w-auto"
                       >
                         <a href="#contact">
-                          Inquire about this service <ArrowUpRight className="ml-1.5 size-4" />
+                          Inquire about this service <ArrowUpRight className="ml-1.5 size-3.5" />
                         </a>
                       </Button>
                     </div>
@@ -499,26 +484,28 @@ function SanjeevPortfolio() {
 
               {/* Project Navigation List */}
               <div className="lg:col-span-4">
-                <p className="display-type text-xs uppercase text-muted-foreground pb-2">Select Project to View</p>
+                <p className="display-type text-[11px] uppercase font-bold tracking-wider text-muted-foreground pb-2">
+                  Select Project
+                </p>
                 <div className="border-t border-foreground">
                   {filteredProjects.map((project) => (
                     <button
                       key={project.id}
                       onClick={() => setActiveProject(project)}
-                      className={`group grid w-full grid-cols-[2.5rem_1fr_auto] items-start gap-3 border-b border-border p-4 text-left transition-colors hover:bg-studio-soft/70 ${
+                      className={`group grid w-full grid-cols-[2rem_1fr_auto] items-center gap-3 border-b border-border px-3 py-3 text-left transition-colors hover:bg-studio-soft/80 ${
                         activeProject.id === project.id ? "bg-studio-soft border-l-4 border-l-signal" : ""
                       }`}
                     >
-                      <span className="display-type text-xs font-bold text-signal pt-0.5">{project.id}</span>
+                      <span className="display-type text-xs font-bold text-signal">{project.id}</span>
                       <span className="min-w-0">
-                        <span className="display-type block text-base font-bold uppercase truncate">
+                        <span className="display-type block text-sm font-bold uppercase truncate group-hover:text-foreground">
                           {project.title}
                         </span>
-                        <span className="mt-0.5 block text-xs text-muted-foreground">
+                        <span className="block text-[11px] text-muted-foreground truncate">
                           {project.service}
                         </span>
                       </span>
-                      <ArrowUpRight className="size-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     </button>
                   ))}
                 </div>
@@ -527,52 +514,56 @@ function SanjeevPortfolio() {
           </div>
         </section>
 
-        {/* ABOUT SECTION */}
-        <section id="about" className="scroll-mt-20 border-b border-border">
-          <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-12 px-4 py-16 sm:px-8 lg:grid-cols-12 lg:px-12 lg:py-24">
-            
-            {/* Visual Image / Graphics */}
-            <div className="relative min-h-[460px] lg:col-span-5">
-              <div className="absolute inset-x-6 bottom-0 top-10 bg-foreground" />
-              <div className="absolute left-0 top-0 h-20 w-36 bg-signal" />
-              <img
-                src="/img2.png"
-                alt="Black and white portrait of Sanjeev in sunglasses"
-                className="absolute bottom-0 left-1/2 h-[440px] w-auto max-w-none -translate-x-1/2 object-contain sm:h-[500px]"
-              />
-              <div className="absolute bottom-4 right-2 border border-background bg-background px-3 py-2 display-type text-xs uppercase text-foreground">
-                Sanjeev / Creative Designer
+        {/* ABOUT SECTION - Screen-Fit Proportions */}
+        <section id="about" className="scroll-mt-20 border-b border-border lg:min-h-[calc(100svh-4.5rem)] lg:flex lg:items-center">
+          <div className="mx-auto w-full max-w-[1440px] px-4 py-10 sm:px-8 sm:py-12 lg:px-12 lg:py-12">
+            <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10 xl:gap-14">
+              
+              {/* Visual Image / Graphics Frame */}
+              <div className="relative flex h-[340px] items-center justify-center sm:h-[400px] lg:col-span-5 lg:h-[440px] xl:h-[480px]">
+                <div className="absolute inset-x-4 bottom-0 top-8 bg-foreground" />
+                <div className="absolute left-0 top-0 h-16 w-32 bg-signal sm:h-20 sm:w-36" />
+                <img
+                  src="/img2.png"
+                  alt="Black and white portrait of Sanjeev in sunglasses"
+                  className="relative z-10 h-full max-h-[340px] w-auto object-contain drop-shadow-md sm:max-h-[400px] lg:max-h-[440px] xl:max-h-[480px]"
+                />
+                <div className="absolute bottom-3 right-2 z-20 border border-background bg-background px-3 py-1.5 display-type text-[10px] uppercase font-bold text-foreground shadow-sm">
+                  Sanjeev / Creative Designer
+                </div>
               </div>
-            </div>
 
-            {/* About Text */}
-            <div className="lg:col-span-7 lg:pl-6">
-              <p className="eyebrow">03 / About Sanjeev</p>
-              <h2 className="display-type mt-4 text-4xl font-bold uppercase leading-tight sm:text-5xl lg:text-6xl">
-                Turning concepts into clean, memorable, and print-ready reality.
-              </h2>
+              {/* About Text Content */}
+              <div className="lg:col-span-7">
+                <p className="eyebrow">03 / About Sanjeev</p>
+                <h2 className="display-type mt-3 text-3xl font-bold uppercase leading-tight sm:text-4xl lg:text-[2.6rem] xl:text-[3rem]">
+                  Turning concepts into clean, memorable, and print-ready reality.
+                </h2>
 
-              <p className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Hello! I am <span className="font-semibold text-foreground">Sanjeev</span>, a dedicated creative graphic designer. My core passion lies in crafting high-converting social media creatives, iconic logos, complete brand identities, eye-catching product packaging, and meticulous print-ready files.
-              </p>
+                <div className="mt-4 space-y-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base lg:text-[0.95rem]">
+                  <p>
+                    Hello! I am <span className="font-semibold text-foreground">Sanjeev</span>, a dedicated creative graphic designer. My core passion lies in crafting high-converting social media creatives, iconic logos, complete brand identities, eye-catching product packaging, and meticulous print-ready files.
+                  </p>
+                  <p>
+                    Whether you need a fresh visual system from scratch, an engaging Instagram carousel campaign, custom box dielines for retail manufacturing, or luxury printed marketing collateral, I combine design precision with strategic thinking to make your brand shine.
+                  </p>
+                </div>
 
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Whether you need a fresh visual system from scratch, an engaging Instagram carousel campaign, custom box dielines for retail manufacturing, or luxury printed marketing collateral, I combine design precision with strategic thinking to make your brand shine.
-              </p>
-
-              {/* 3 Core Workflow Pillars */}
-              <div className="mt-8 grid grid-cols-1 border-t border-border sm:grid-cols-3">
-                {[
-                  { title: "Digital First", sub: "Social posts, RGB visuals & high-res vector logos." },
-                  { title: "Print Master", sub: "CMYK, Pantone, bleed accuracy & dieline expertise." },
-                  { title: "Brand Cohesion", sub: "Harmonious color palettes & typography systems." },
-                ].map((item) => (
-                  <div key={item.title} className="border-b border-border py-5 sm:border-b-0 sm:border-r sm:pr-4 sm:last:border-r-0">
-                    <span className="display-type block text-lg font-bold uppercase">{item.title}</span>
-                    <span className="mt-1.5 block text-xs leading-relaxed text-muted-foreground">{item.sub}</span>
-                  </div>
-                ))}
+                {/* 3 Core Workflow Pillars */}
+                <div className="mt-6 grid grid-cols-1 border-t border-border sm:grid-cols-3 sm:divide-x sm:divide-border">
+                  {[
+                    { title: "Digital First", sub: "Social posts, RGB visuals & high-res vector logos." },
+                    { title: "Print Master", sub: "CMYK, Pantone, bleed accuracy & dielines." },
+                    { title: "Brand Cohesion", sub: "Harmonious palettes & typography systems." },
+                  ].map((item) => (
+                    <div key={item.title} className="border-b border-border py-3 sm:border-b-0 sm:px-4 sm:first:pl-0 sm:last:pr-0">
+                      <span className="display-type block text-base font-bold uppercase text-foreground">{item.title}</span>
+                      <span className="mt-1 block text-xs leading-normal text-muted-foreground">{item.sub}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
+
             </div>
           </div>
         </section>
@@ -587,27 +578,41 @@ function SanjeevPortfolio() {
                 <h2 className="display-type text-4xl font-bold uppercase leading-none sm:text-6xl lg:text-7xl">
                   Let’s bring your next project to life.
                 </h2>
-                <div className="mt-6 flex flex-wrap gap-2 display-type text-xs uppercase text-background/80">
-                  <span className="border border-background/20 px-3 py-1 bg-background/5">Social Media Posts</span>
-                  <span className="border border-background/20 px-3 py-1 bg-background/5">Logo Design</span>
-                  <span className="border border-background/20 px-3 py-1 bg-background/5">Branding Design</span>
-                  <span className="border border-background/20 px-3 py-1 bg-background/5">Packaging Design</span>
-                  <span className="border border-background/20 px-3 py-1 bg-background/5">Printing Design</span>
-                </div>
+                <p className="mt-6 max-w-[48ch] text-base leading-relaxed text-background/70 sm:text-lg">
+                  Available for select collaborations, commercial design projects, and high-impact visual commissions. Send over your goals and timeline.
+                </p>
               </div>
 
               <div className="lg:col-span-4">
-                <p className="text-sm leading-relaxed text-background/70 sm:text-base">
-                  Have an upcoming campaign, a product needing packaging, a new business needing a logo, or print collateral to produce? Let's discuss your brief.
-                </p>
-                <Button
-                  asChild
-                  className="mt-6 h-12 w-full rounded-none bg-signal px-6 display-type text-xs uppercase text-foreground hover:bg-background sm:w-auto"
-                >
-                  <a href="mailto:hello@sanjeev.studio">
-                    Send Project Brief <ArrowUpRight className="ml-1.5 size-4" />
-                  </a>
-                </Button>
+                <div className="border border-background/20 bg-background/5 p-6 sm:p-7">
+                  <p className="display-type text-xs uppercase tracking-wider text-signal font-semibold">
+                    Direct Inquiries
+                  </p>
+                  <div className="mt-4 space-y-2 display-type text-xs text-background">
+                    <a
+                      href="mailto:sanjeevsanju281@gmail.com"
+                      className="flex items-center gap-2 text-background/80 hover:text-signal transition-colors"
+                    >
+                      <Mail className="size-3.5 shrink-0" />
+                      <span className="truncate">sanjeevsanju281@gmail.com</span>
+                    </a>
+                    <a
+                      href="tel:+919514644375"
+                      className="flex items-center gap-2 text-background/80 hover:text-signal transition-colors"
+                    >
+                      <Phone className="size-3.5 shrink-0" />
+                      <span>+919514644375</span>
+                    </a>
+                  </div>
+                  <Button
+                    asChild
+                    className="mt-6 h-11 w-full rounded-none bg-signal px-6 display-type text-xs uppercase text-foreground hover:bg-background"
+                  >
+                    <a href="mailto:sanjeevsanju281@gmail.com">
+                      Send Project Brief <ArrowUpRight className="ml-1.5 size-4" />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -617,13 +622,16 @@ function SanjeevPortfolio() {
       {/* FOOTER */}
       <footer className="bg-foreground text-background">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-4 border-t border-background/15 px-4 py-8 display-type text-xs uppercase text-background/60 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
-          <span>© 2026 Sanjeev / Graphic, Brand, Packaging & Print Designer</span>
-          <div className="flex gap-6">
+          <span>© 2026 Sanjeev / Graphic Designer</span>
+          <div className="flex flex-wrap gap-6">
             <a href="#top" className="transition-colors hover:text-background">
               Back to top <CircleArrowUp className="ml-1 inline size-3.5" />
             </a>
-            <a href="mailto:hello@sanjeev.studio" className="transition-colors hover:text-background">
-              hello@sanjeev.studio
+            <a href="mailto:sanjeevsanju281@gmail.com" className="transition-colors hover:text-background">
+              sanjeevsanju281@gmail.com
+            </a>
+            <a href="tel:+919514644375" className="transition-colors hover:text-background">
+              +919514644375
             </a>
           </div>
         </div>
@@ -645,7 +653,7 @@ function ProjectVisual({ visual }: { visual: PortfolioProject["visual"] }) {
             <span className="text-[9px]">•••</span>
           </div>
           <div className="mt-3 aspect-square bg-foreground text-background p-3 flex flex-col justify-between">
-            <span className="display-type text-xl font-bold uppercase leading-none">PEAK MOTION</span>
+            <span className="display-type text-xl font-bold uppercase leading-none">AURA STUDIO</span>
             <div className="flex justify-between items-end">
               <span className="display-type text-[8px] bg-signal text-foreground px-1 py-0.5 uppercase">Swipe 1/5 →</span>
               <span className="size-4 bg-signal rounded-full" />
